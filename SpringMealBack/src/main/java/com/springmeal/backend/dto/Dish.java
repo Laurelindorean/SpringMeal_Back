@@ -4,14 +4,18 @@
 package com.springmeal.backend.dto;
 
 import java.awt.Image;
+import java.util.List;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.Entity;
-
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 /**
@@ -29,6 +33,10 @@ public class Dish {
 	private String name;
 	private String description;
 	private Image image;
+	
+	@OneToMany
+	@JoinColumn(name = "allergen")
+	private List<Allergens> allergen;
 
 	@ManyToOne
 	@JoinColumn(name = "id_category")
@@ -86,6 +94,17 @@ public class Dish {
 
 	public void setCategory(Category category) {
 		this.category = category;
+	}
+	
+	
+	@JsonIgnore
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "Allergens")
+	public Allergens getAllergen() {
+		return allergen;
+	}
+
+	public void setAllergen(Allergens allergen) {
+		this.allergen = allergen;
 	}
 
 	// TO STRING

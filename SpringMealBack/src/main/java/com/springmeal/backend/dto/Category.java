@@ -5,8 +5,10 @@ package com.springmeal.backend.dto;
 
 import java.util.List;
 
-import jakarta.persistence.Entity;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -56,6 +58,17 @@ public class Category {
 
 	public void setName(String name) {
 		this.name = name;
+	}
+	
+	
+	@JsonIgnore
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "Dish")
+	public List<Dish> getDish() {
+		return dish;
+	}
+
+	public void setDish(List<Dish> dish) {
+		this.dish = dish;
 	}
 
 	// TO STRING
