@@ -1,3 +1,14 @@
+## Descripción del proyecto
+API REST completa,   con   Spring Framework, 
+En ella se administran las peticiones CRUD de de los usuarios para realizar reservas de comidas.
+
+## Tecnologias usadas
+- Java 8
+- Maven
+- SpringBoot
+- H2
+- JPA
+
 # SpringMeal_Back
 Repository dedicated for the Back end part of our final project
 
