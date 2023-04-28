@@ -23,7 +23,7 @@ import jakarta.persistence.Table;
 @Table(name = "slot")
 public class Slot {
 
-	// Atributes
+	// Fields
 
 	@Id
 	private int id;

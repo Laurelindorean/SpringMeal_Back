@@ -4,13 +4,18 @@
 package com.springmeal.backend.dto;
 
 import java.sql.Date;
+import java.util.List;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 /**
@@ -21,10 +26,16 @@ import jakarta.persistence.Table;
 @Table(name = "orders")
 public class Order {
 
+	// Fields
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 	private Date date;
+
+	@OneToMany(fetch = FetchType.LAZY)
+	@JoinColumn(name = "id_orders")
+	private List<OrderDish> orderDish;
 
 	@ManyToOne
 	@JoinColumn(name = "id_slot")
@@ -43,13 +54,15 @@ public class Order {
 	/**
 	 * @param id
 	 * @param date
+	 * @param orderDish
 	 * @param slot
 	 * @param user
 	 */
-	public Order(int id, Date date, Slot slot, User user) {
+	public Order(int id, Date date, List<OrderDish> orderDish, Slot slot, User user) {
 		super();
 		this.id = id;
 		this.date = date;
+		this.orderDish = orderDish;
 		this.slot = slot;
 		this.user = user;
 	}
@@ -80,6 +93,21 @@ public class Order {
 	 */
 	public void setDate(Date date) {
 		this.date = date;
+	}
+
+	/**
+	 * @return the orderDish
+	 */
+	@JsonIgnore
+	public List<OrderDish> getOrderDish() {
+		return orderDish;
+	}
+
+	/**
+	 * @param orderDish the orderDish to set
+	 */
+	public void setOrderDish(List<OrderDish> orderDish) {
+		this.orderDish = orderDish;
 	}
 
 	/**
