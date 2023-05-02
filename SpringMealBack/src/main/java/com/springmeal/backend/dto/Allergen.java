@@ -13,8 +13,8 @@ import jakarta.persistence.Table;
  * @author Joan
  */
 @Entity
-@Table(name = "allergens")
-public class Allergens {
+@Table(name = "allergen")
+public class Allergen {
     @Id
 	@Column(name = "id")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -22,10 +22,10 @@ public class Allergens {
 	@Column(name = "name")
 	private String name;
 
-    public Allergens() {
+    public Allergen() {
     }
 
-    public Allergens(String name) {
+    public Allergen(String name) {
         this.name = name;
     }
 

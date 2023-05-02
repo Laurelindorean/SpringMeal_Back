@@ -8,7 +8,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import com.springmeal.backend.dto.User;
 
 /**
- * @author aitor
+ * @author joan
  *
  */
 public interface IUserDAO extends JpaRepository<User, Integer> {

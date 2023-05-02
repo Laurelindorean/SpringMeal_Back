@@ -18,13 +18,13 @@ USE `Springmeal`;
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `allergens`
+-- Table structure for table `allergen`
 --
 
-DROP TABLE IF EXISTS `allergens`;
+DROP TABLE IF EXISTS `allergen`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `allergens` (
+CREATE TABLE `allergen` (
   `id` int NOT NULL AUTO_INCREMENT,
   `name` varchar(155) DEFAULT NULL,
   PRIMARY KEY (`id`)
@@ -32,12 +32,12 @@ CREATE TABLE `allergens` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `allergens`
+-- Dumping data for table `allergen`
 --
 
-LOCK TABLES `allergens` WRITE;
-/*!40000 ALTER TABLE `allergens` DISABLE KEYS */;
-/*!40000 ALTER TABLE `allergens` ENABLE KEYS */;
+LOCK TABLES `allergen` WRITE;
+/*!40000 ALTER TABLE `allergen` DISABLE KEYS */;
+/*!40000 ALTER TABLE `allergen` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -92,31 +92,31 @@ LOCK TABLES `dish` WRITE;
 UNLOCK TABLES;
 
 --
--- Table structure for table `dishallergens`
+-- Table structure for table `dishallergen`
 --
 
-DROP TABLE IF EXISTS `dishallergens`;
+DROP TABLE IF EXISTS `dishallergen`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `dishallergens` (
+CREATE TABLE `dishallergen` (
   `id` int NOT NULL AUTO_INCREMENT,
   `id_dish` int DEFAULT NULL,
-  `id_allergens` int DEFAULT NULL,
+  `id_allergen` int DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `id_dish` (`id_dish`),
-  KEY `id_allergens` (`id_allergens`),
-  CONSTRAINT `dishallergens_ibfk_1` FOREIGN KEY (`id_dish`) REFERENCES `dish` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `dishallergens_ibfk_2` FOREIGN KEY (`id_allergens`) REFERENCES `allergens` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+  KEY `id_allergen` (`id_allergen`),
+  CONSTRAINT `dishallergen_ibfk_1` FOREIGN KEY (`id_dish`) REFERENCES `dish` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `dishallergen_ibfk_2` FOREIGN KEY (`id_allergen`) REFERENCES `allergen` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `dishallergens`
+-- Dumping data for table `dishallergen`
 --
 
-LOCK TABLES `dishallergens` WRITE;
-/*!40000 ALTER TABLE `dishallergens` DISABLE KEYS */;
-/*!40000 ALTER TABLE `dishallergens` ENABLE KEYS */;
+LOCK TABLES `dishallergen` WRITE;
+/*!40000 ALTER TABLE `dishallergen` DISABLE KEYS */;
+/*!40000 ALTER TABLE `dishallergen` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
