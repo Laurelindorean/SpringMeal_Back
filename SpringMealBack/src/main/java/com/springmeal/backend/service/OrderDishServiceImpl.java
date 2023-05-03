@@ -6,6 +6,7 @@ package com.springmeal.backend.service;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.springmeal.backend.dao.IOrderDishDAO;
 import com.springmeal.backend.dto.OrderDish;
@@ -14,6 +15,7 @@ import com.springmeal.backend.dto.OrderDish;
  * @author Palmira
  *
  */
+@Service
 public class OrderDishServiceImpl implements IOrderDishService {
 
 	@Autowired

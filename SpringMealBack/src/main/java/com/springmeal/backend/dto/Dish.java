@@ -28,7 +28,7 @@ public class Dish {
 
 	private String name; 
 	private String description;
-	private Image image;
+	private byte[] image;
 
 	@ManyToOne
 	@JoinColumn(name = "id_category")
@@ -39,7 +39,7 @@ public class Dish {
 
 	}
 
-	public Dish(String name, String description, Image image, Category category) {
+	public Dish(String name, String description, byte[] image, Category category) {
 		this.name = name;
 		this.description = description;
 		this.image = image;
@@ -72,11 +72,11 @@ public class Dish {
 		this.description = description;
 	}
 
-	public Image getImage() {
+	public byte[] getImage() {
 		return image;
 	}
 
-	public void setImage(Image image) {
+	public void setImage(byte[] image) {
 		this.image = image;
 	}
 
