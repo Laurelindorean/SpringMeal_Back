@@ -2,7 +2,7 @@ CREATE DATABASE  IF NOT EXISTS `Springmeal` /*!40100 DEFAULT CHARACTER SET utf8m
 USE `Springmeal`;
 -- MySQL dump 10.13  Distrib 8.0.28, for Win64 (x86_64)
 --
--- Host: containers-us-west-207.railway.app    Database: Springmeal
+-- Host: containers-us-west-193.railway.app    Database: Springmeal
 -- ------------------------------------------------------
 -- Server version	8.0.33
 
@@ -28,7 +28,7 @@ CREATE TABLE `allergens` (
   `id` int NOT NULL AUTO_INCREMENT,
   `name` varchar(155) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -37,6 +37,7 @@ CREATE TABLE `allergens` (
 
 LOCK TABLES `allergens` WRITE;
 /*!40000 ALTER TABLE `allergens` DISABLE KEYS */;
+INSERT INTO `allergens` VALUES (1,'gluten'),(2,'lactose');
 /*!40000 ALTER TABLE `allergens` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -48,10 +49,10 @@ DROP TABLE IF EXISTS `category`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `category` (
-  `id` int NOT NULL,
+  `id` int NOT NULL AUTO_INCREMENT,
   `name` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -60,7 +61,7 @@ CREATE TABLE `category` (
 
 LOCK TABLES `category` WRITE;
 /*!40000 ALTER TABLE `category` DISABLE KEYS */;
-INSERT INTO `category` VALUES (1,'main course');
+INSERT INTO `category` VALUES (1,'starters'),(2,'drinks'),(3,'dessert');
 /*!40000 ALTER TABLE `category` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -80,7 +81,7 @@ CREATE TABLE `dish` (
   PRIMARY KEY (`id`),
   KEY `id_category` (`id_category`),
   CONSTRAINT `dish_ibfk_1` FOREIGN KEY (`id_category`) REFERENCES `category` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -89,7 +90,7 @@ CREATE TABLE `dish` (
 
 LOCK TABLES `dish` WRITE;
 /*!40000 ALTER TABLE `dish` DISABLE KEYS */;
-INSERT INTO `dish` VALUES (1,'caesar salad','Green salad with chesse and fried chicken',_binary 'foto.png',1);
+INSERT INTO `dish` VALUES (1,'caesar salad','Green salad with chesse and fried chicken',_binary 'foto.png',1),(2,'paella','paella with chicken and vegetables',_binary 'foto2.png',2),(3,'Roast veal sweetbread','toasted grains, macadamia, jus noisette',_binary 'foto.png',1);
 /*!40000 ALTER TABLE `dish` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -109,7 +110,7 @@ CREATE TABLE `dishallergens` (
   KEY `id_allergens` (`id_allergens`),
   CONSTRAINT `dishallergens_ibfk_1` FOREIGN KEY (`id_dish`) REFERENCES `dish` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `dishallergens_ibfk_2` FOREIGN KEY (`id_allergens`) REFERENCES `allergens` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -118,6 +119,7 @@ CREATE TABLE `dishallergens` (
 
 LOCK TABLES `dishallergens` WRITE;
 /*!40000 ALTER TABLE `dishallergens` DISABLE KEYS */;
+INSERT INTO `dishallergens` VALUES (1,1,2),(2,1,1);
 /*!40000 ALTER TABLE `dishallergens` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -137,7 +139,7 @@ CREATE TABLE `orderdish` (
   KEY `id_dish` (`id_dish`),
   CONSTRAINT `orderdish_ibfk_1` FOREIGN KEY (`id_orders`) REFERENCES `orders` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `orderdish_ibfk_2` FOREIGN KEY (`id_dish`) REFERENCES `dish` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -146,7 +148,7 @@ CREATE TABLE `orderdish` (
 
 LOCK TABLES `orderdish` WRITE;
 /*!40000 ALTER TABLE `orderdish` DISABLE KEYS */;
-INSERT INTO `orderdish` VALUES (1,1,1),(2,2,NULL),(4,2,NULL);
+INSERT INTO `orderdish` VALUES (1,1,1);
 /*!40000 ALTER TABLE `orderdish` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -167,7 +169,7 @@ CREATE TABLE `orders` (
   KEY `id_user` (`id_user`),
   CONSTRAINT `orders_ibfk_1` FOREIGN KEY (`id_slot`) REFERENCES `slot` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `orders_ibfk_2` FOREIGN KEY (`id_user`) REFERENCES `user` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -176,7 +178,7 @@ CREATE TABLE `orders` (
 
 LOCK TABLES `orders` WRITE;
 /*!40000 ALTER TABLE `orders` DISABLE KEYS */;
-INSERT INTO `orders` VALUES (1,'2023-04-30',2,1),(2,'2023-05-02',2,1);
+INSERT INTO `orders` VALUES (1,'2023-05-01',1,1),(2,'2023-05-04',2,2);
 /*!40000 ALTER TABLE `orders` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -225,7 +227,7 @@ CREATE TABLE `slot` (
 
 LOCK TABLES `slot` WRITE;
 /*!40000 ALTER TABLE `slot` DISABLE KEYS */;
-INSERT INTO `slot` VALUES (1,'12:00:00','12:15:00'),(2,'12:15:02','12:30:00');
+INSERT INTO `slot` VALUES (1,'12:00:00','12:15:00'),(2,'12:15:00','12:30:00'),(3,'12:45:00','13:00:00');
 /*!40000 ALTER TABLE `slot` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -247,7 +249,7 @@ CREATE TABLE `user` (
   PRIMARY KEY (`id`),
   KEY `id_role` (`id_role`),
   CONSTRAINT `user_ibfk_1` FOREIGN KEY (`id_role`) REFERENCES `role` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -256,7 +258,7 @@ CREATE TABLE `user` (
 
 LOCK TABLES `user` WRITE;
 /*!40000 ALTER TABLE `user` DISABLE KEYS */;
-INSERT INTO `user` VALUES (1,'Palmira','Laurelindorean','palmira1@hotmail.com','47758623C','1234',1),(2,'Aitor','Aitor','aitor1@hotmail.com','12478895T','pass123',1),(3,'Joan','Joan','Joan1@hotmail.com','44123235T','pass123',1),(4,'Miguel','UsernNoob','noob@hotmail.com','44124778A','pass123',2);
+INSERT INTO `user` VALUES (1,'Palmira','Laurelindorean','palmira1@hotmail.com','47758623C','1234',1),(2,'Aitor','AitorIglesias','aitor1@hotmail.com','17899563A','1234',2),(3,'Joan','JoanLapeyra','Joan1@hotmail.com','14778996S','1234',1);
 /*!40000 ALTER TABLE `user` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -269,4 +271,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-05-04  0:26:48
+-- Dump completed on 2023-05-05  1:23:01

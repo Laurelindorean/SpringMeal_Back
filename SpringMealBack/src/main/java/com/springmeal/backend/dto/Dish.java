@@ -28,14 +28,18 @@ public class Dish {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
-
 	private String name; 
 	private String description;
 	
-	@OneToMany
-	@JoinColumn(name = "allergen")
-	private List<Allergen> allergen;
-
+	
+	@OneToMany(fetch = FetchType.LAZY)
+	@JoinColumn(name = "id_dish")
+	private List<DishAllergens> dishAllergen;
+	
+	@OneToMany(fetch = FetchType.LAZY)
+	@JoinColumn(name = "id_dish")
+	private List<OrderDish> orderDish;	
+	
 	private byte[] image;
 
 	@ManyToOne
@@ -96,15 +100,22 @@ public class Dish {
 		this.category = category;
 	}
 	
-	
 	@JsonIgnore
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "Allergens")
-	public Allergen getAllergen() {
-		return (Allergen) allergen;
+	public List<DishAllergens> getDishAllergen() {
+		return dishAllergen;
 	}
 
-	public void setAllergen(Allergen allergen) {
-		this.allergen = (List<Allergen>) allergen;
+	public void setDishAllergen(List<DishAllergens> dishAllergen) {
+		this.dishAllergen = dishAllergen;
+	}
+
+	@JsonIgnore
+	public List<OrderDish> getOrderDish() {
+		return orderDish;
+	}
+
+	public void setOrderDish(List<OrderDish> orderDish) {
+		this.orderDish = orderDish;
 	}
 
 	// TO STRING

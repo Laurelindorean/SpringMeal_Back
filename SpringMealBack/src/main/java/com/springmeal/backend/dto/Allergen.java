@@ -13,7 +13,7 @@ import jakarta.persistence.Table;
  * @author Joan
  */
 @Entity
-@Table(name = "allergen")
+@Table(name = "allergens")
 public class Allergen {
     @Id
 	@Column(name = "id")

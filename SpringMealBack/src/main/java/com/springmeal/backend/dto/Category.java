@@ -31,7 +31,7 @@ public class Category {
 	private String name;
 
 	@OneToMany
-	@JoinColumn(name = "dish")
+	@JoinColumn(name = "id_category")
 	private List<Dish> dish;
 
 	// CONSTRUCTORES
