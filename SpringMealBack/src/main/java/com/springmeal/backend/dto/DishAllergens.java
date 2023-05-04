@@ -33,7 +33,7 @@ public class DishAllergens {
 	
 	@ManyToOne
 	@JoinColumn(name = "id_allergens")
-	private Allergens allergens;
+	private Allergen allergens;
 
 
 	// CONSTRUCTORES
@@ -41,7 +41,7 @@ public class DishAllergens {
 
 	}
 
-	public DishAllergens(Dish dish, Allergens allergens) {
+	public DishAllergens(Dish dish, Allergen allergens) {
 		this.dish = dish;
 		this.allergens = allergens;
 	}
@@ -62,11 +62,11 @@ public class DishAllergens {
 		this.dish = dish;
 	}
 
-	public Allergens getAllergens() {
+	public Allergen getAllergens() {
 		return allergens;
 	}
 
-	public void setAllergens(Allergens allergens) {
+	public void setAllergens(Allergen allergens) {
 		this.allergens = allergens;
 	}
 

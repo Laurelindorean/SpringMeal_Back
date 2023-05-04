@@ -3,7 +3,6 @@
  */
 package com.springmeal.backend.dto;
 
-import java.awt.Image;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -30,13 +29,14 @@ public class Dish {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 
-	private String name;
+	private String name; 
 	private String description;
-	private Image image;
 	
 	@OneToMany
 	@JoinColumn(name = "allergen")
-	private List<Allergens> allergen;
+	private List<Allergen> allergen;
+
+	private byte[] image;
 
 	@ManyToOne
 	@JoinColumn(name = "id_category")
@@ -47,7 +47,7 @@ public class Dish {
 
 	}
 
-	public Dish(String name, String description, Image image, Category category) {
+	public Dish(String name, String description, byte[] image, Category category) {
 		this.name = name;
 		this.description = description;
 		this.image = image;
@@ -80,11 +80,11 @@ public class Dish {
 		this.description = description;
 	}
 
-	public Image getImage() {
+	public byte[] getImage() {
 		return image;
 	}
 
-	public void setImage(Image image) {
+	public void setImage(byte[] image) {
 		this.image = image;
 	}
 
@@ -99,12 +99,12 @@ public class Dish {
 	
 	@JsonIgnore
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "Allergens")
-	public Allergens getAllergen() {
-		return allergen;
+	public Allergen getAllergen() {
+		return (Allergen) allergen;
 	}
 
-	public void setAllergen(Allergens allergen) {
-		this.allergen = allergen;
+	public void setAllergen(Allergen allergen) {
+		this.allergen = (List<Allergen>) allergen;
 	}
 
 	// TO STRING
