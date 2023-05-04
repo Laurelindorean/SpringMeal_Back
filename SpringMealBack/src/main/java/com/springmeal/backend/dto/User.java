@@ -1,6 +1,5 @@
 package com.springmeal.backend.dto;
 
-import org.hibernate.mapping.Set;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
