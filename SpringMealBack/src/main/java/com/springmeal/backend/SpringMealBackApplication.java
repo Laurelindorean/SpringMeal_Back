@@ -8,7 +8,7 @@ import org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfi
 public class SpringMealBackApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(SpringMealBackApplication.class, args);
+		SpringApplication.run(SpringMealBackApplication.class, args); 
 	}
 
 }
