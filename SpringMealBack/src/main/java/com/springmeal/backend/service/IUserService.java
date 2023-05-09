@@ -17,7 +17,7 @@ public interface IUserService {
 
 	public User guardarUser(User user); // Guarda un departamento CREATE
 
-	public User userById(int codigo); // Leer datos de un departamento READ
+	public User findById(int codigo); // Leer datos de un departamento READ
 
 	public User actualizarUser(User user); // Actualiza datos del departamento UPDATE
 

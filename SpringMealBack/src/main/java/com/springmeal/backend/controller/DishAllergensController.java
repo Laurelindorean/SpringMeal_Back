@@ -42,9 +42,9 @@ public class DishAllergensController {
 	}
 
 	@GetMapping("/dishallergens/{id}")
-	public DishAllergens dishAllergensById(@PathVariable(name = "id") int id) {
+	public DishAllergens findById(@PathVariable(name = "id") int id) {
 		DishAllergens dishAllergens = new DishAllergens();
-		dishAllergens = dishAllergensServiceImpl.dishAllergensById(id);
+		dishAllergens = dishAllergensServiceImpl.findById(id);
 		return dishAllergens;
 	}
 
@@ -54,7 +54,7 @@ public class DishAllergensController {
 
 		DishAllergens dishAllergens_seleccionado = new DishAllergens();
 		DishAllergens dishAllergens_actualizado = new DishAllergens();
-		dishAllergens_seleccionado = dishAllergensServiceImpl.dishAllergensById(id);
+		dishAllergens_seleccionado = dishAllergensServiceImpl.findById(id);
 		dishAllergens_seleccionado.setId(id);
 		dishAllergens_seleccionado.setAllergens(dishAllergens.getAllergens());
 		dishAllergens_seleccionado.setDish(dishAllergens.getDish());

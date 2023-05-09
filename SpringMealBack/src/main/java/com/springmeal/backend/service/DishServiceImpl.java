@@ -33,7 +33,7 @@ public class DishServiceImpl implements IDishService {
 	}
 
 	@Override
-	public Dish dishById(int id) {
+	public Dish findById(int id) {
 		return iDishDAO.findById(id).get();
 	}
 
@@ -48,12 +48,17 @@ public class DishServiceImpl implements IDishService {
 	}
 	
 	@Override
-	public List<Dish> dishByName(String name) {
+	public List<Dish> findByName(String name) {
 		return iDishDAO.findByName(name);
 	}
 	
 	@Override
-	public List<Dish> dishByCategory(Category category) {
+	public List<Dish> findByPartialName(String partial_name) {
+		return iDishDAO.findByPartialName(partial_name);
+	}
+	
+	@Override
+	public List<Dish> findByCategory(Category category) {
 		return iDishDAO.findByCategory(category);
 	}
 

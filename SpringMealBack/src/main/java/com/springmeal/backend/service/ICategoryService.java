@@ -17,7 +17,7 @@ public interface ICategoryService {
 
 	public Category guardarCategory(Category category);
 
-	public Category categoryById(int id);
+	public Category findById(int id);
 
 	public Category actualizarCategory(Category category);
 

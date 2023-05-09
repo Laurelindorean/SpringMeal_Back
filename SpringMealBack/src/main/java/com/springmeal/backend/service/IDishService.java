@@ -18,13 +18,15 @@ public interface IDishService {
 
 	public Dish guardarDish(Dish dish);
 
-	public Dish dishById(int id);
+	public Dish findById(int id);
 
 	public Dish actualizarDish(Dish dish);
 
 	public void eliminarDish(int id);
 
-	public List<Dish> dishByName(String name);
+	public List<Dish> findByName(String name);
 	
-	public List<Dish> dishByCategory(Category category);
+	public List<Dish> findByPartialName(String partial_name);
+	
+	public List<Dish> findByCategory(Category category);
 }

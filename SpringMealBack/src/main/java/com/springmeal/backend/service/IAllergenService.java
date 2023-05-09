@@ -17,7 +17,7 @@ public interface IAllergenService {
 
 	public Allergen guardarAllergen(Allergen allergen); // Guarda un departamento CREATE
 
-	public Allergen allergenById(int codigo); // Leer datos de un departamento READ
+	public Allergen findById(int codigo); // Leer datos de un departamento READ
 
 	public Allergen actualizarAllergen(Allergen allergen); // Actualiza datos del departamento UPDATE
 

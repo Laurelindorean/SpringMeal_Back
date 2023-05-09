@@ -3,6 +3,7 @@
  */
 package com.springmeal.backend.controller;
 
+import java.sql.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,16 +41,21 @@ public class OrderController {
 	}
 
 	@GetMapping("/orders/{id}")
-	public Order orderById(@PathVariable(name = "id") int id) {
+	public Order findById(@PathVariable(name = "id") int id) {
 		Order order_id = new Order();
-		order_id = orderServiceImpl.orderById(id);
+		order_id = orderServiceImpl.findById(id);
 		return order_id;
+	}
+	
+	@GetMapping("/orders/date/{date}")
+	public List<Order> findByDate(@PathVariable(name = "date") Date date) {
+		return orderServiceImpl.findByDate(date);
 	}
 
 	@PutMapping("/orders/{id}")
 	public Order updateOrder(@PathVariable(name = "id") int id, @RequestBody Order order) {
 		Order order_sel = new Order();
-		order_sel = orderServiceImpl.orderById(id);
+		order_sel = orderServiceImpl.findById(id);
 		order_sel.setDate(order.getDate());
 		order_sel.setSlot(order.getSlot());
 		// this line has an error because we haven't implemented the User Entity yet

@@ -40,9 +40,9 @@ public class UserController {
 	}
 
 	@GetMapping("/users/{codigo}")
-	public User userById(@PathVariable(name = "codigo") int codigo) {
+	public User findById(@PathVariable(name = "codigo") int codigo) {
 		User user = new User();
-		user = userServiceImpl.userById(codigo);
+		user = userServiceImpl.findById(codigo);
 		return user;
 	}
 
@@ -51,7 +51,7 @@ public class UserController {
 
 		User user_seleccionado = new User();
 		User user_actualizado = new User();
-		user_seleccionado = userServiceImpl.userById(codigo);
+		user_seleccionado = userServiceImpl.findById(codigo);
 		user_seleccionado.setDni(user.getDni());
 		user_seleccionado.setEmail(user.getEmail());
 		user_seleccionado.setName(user.getName());

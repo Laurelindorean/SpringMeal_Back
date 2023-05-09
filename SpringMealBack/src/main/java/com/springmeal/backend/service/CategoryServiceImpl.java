@@ -32,7 +32,7 @@ public class CategoryServiceImpl implements ICategoryService {
 	}
 
 	@Override
-	public Category categoryById(int id) {
+	public Category findById(int id) {
 		return iCategoryDAO.findById(id).get();
 	}
 

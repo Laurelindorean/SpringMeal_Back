@@ -32,7 +32,7 @@ public class OrderServiceImpl implements IOrderService {
 	}
 
 	@Override
-	public Order orderById(int id) {
+	public Order findById(int id) {
 		return iOrderDAO.findById(id).get();
 	}
 
