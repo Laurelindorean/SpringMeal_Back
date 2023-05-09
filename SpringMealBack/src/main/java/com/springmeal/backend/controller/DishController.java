@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.springmeal.backend.dto.Dish;
+import com.springmeal.backend.dto.Category;
 import com.springmeal.backend.service.DishServiceImpl;
 
 /**
@@ -44,6 +45,16 @@ public class DishController {
 		Dish dish = new Dish();
 		dish = dishServiceImpl.dishById(id);
 		return dish;
+	}
+
+	@GetMapping("/dishes/name/{name}")
+	public List<Dish> dishByName(@PathVariable(name = "name") String name) {
+		return dishServiceImpl.dishByName(name);
+	}
+	
+	@GetMapping("/dishes/category")
+	public List<Dish> dishByName(@RequestBody Category category) {
+		return dishServiceImpl.dishByCategory(category);
 	}
 
 	@PutMapping("/dishes/{id}")

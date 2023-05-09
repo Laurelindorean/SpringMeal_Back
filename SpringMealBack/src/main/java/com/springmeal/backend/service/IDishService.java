@@ -5,6 +5,7 @@ package com.springmeal.backend.service;
 
 import java.util.List;
 
+import com.springmeal.backend.dto.Category;
 import com.springmeal.backend.dto.Dish;
 
 /**
@@ -22,4 +23,8 @@ public interface IDishService {
 	public Dish actualizarDish(Dish dish);
 
 	public void eliminarDish(int id);
+
+	public List<Dish> dishByName(String name);
+	
+	public List<Dish> dishByCategory(Category category);
 }

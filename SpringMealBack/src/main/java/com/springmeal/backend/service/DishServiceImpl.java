@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.springmeal.backend.dao.IDishDAO;
+import com.springmeal.backend.dto.Category;
 import com.springmeal.backend.dto.Dish;
 
 /**
@@ -44,7 +45,16 @@ public class DishServiceImpl implements IDishService {
 	@Override
 	public void eliminarDish(int id) {
 		iDishDAO.deleteById(id);
-
+	}
+	
+	@Override
+	public List<Dish> dishByName(String name) {
+		return iDishDAO.findByName(name);
+	}
+	
+	@Override
+	public List<Dish> dishByCategory(Category category) {
+		return iDishDAO.findByCategory(category);
 	}
 
 }
