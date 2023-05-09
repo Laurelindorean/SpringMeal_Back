@@ -49,18 +49,19 @@ public class DishController {
 	@PutMapping("/dishes/{id}")
 	public Dish actualizarDish(@PathVariable(name = "id") int id, @RequestBody Dish dish) {
 
-		Dish dish_seleccionado = new Dish();
-		Dish dish_actualizado = new Dish();
-		dish_seleccionado = dishServiceImpl.dishById(id);
-		dish_seleccionado.setId(id);
-		dish_seleccionado.setCategory(dish.getCategory());
-		dish_seleccionado.setDescription(dish.getDescription());
-		dish_seleccionado.setImage(dish.getImage());
-		dish_seleccionado.setName(dish.getName());
+		Dish dishSelected = new Dish();
+		Dish dishUpdated = new Dish();
+		dishSelected = dishServiceImpl.dishById(id);
+		dishSelected.setId(id);
+		dishSelected.setCategory(dish.getCategory());
+		dishSelected.setDescription(dish.getDescription());
+		dishSelected.setImage(dish.getImage());
+		dishSelected.setPrice(dish.getPrice());
+		dishSelected.setName(dish.getName());
 
-		dish_actualizado = dishServiceImpl.actualizarDish(dish_seleccionado);
+		dishUpdated = dishServiceImpl.actualizarDish(dishSelected);
 
-		return dish_actualizado;
+		return dishUpdated;
 	}
 
 	@DeleteMapping("/dishes/{id}")

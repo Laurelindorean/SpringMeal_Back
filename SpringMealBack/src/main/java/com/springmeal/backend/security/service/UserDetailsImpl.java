@@ -47,17 +47,15 @@ public class UserDetailsImpl implements UserDetails {
 	public Collection<? extends GrantedAuthority> getAuthorities() {
 		return authorities;
 	}
-
+	
 	@Override
-	public String getPassword() {
-		// TODO Auto-generated method stub
-		return null;
+	public String getUsername() {
+		return username;
 	}
 
 	@Override
-	public String getUsername() {
-		// TODO Auto-generated method stub
-		return null;
+	public String getPassword() {
+		return password;
 	}
 
 	@Override
@@ -78,14 +76,6 @@ public class UserDetailsImpl implements UserDetails {
 	@Override
 	public boolean isEnabled() {
 		return true;
-	}
-
-	public void setUsername(String username) {
-		this.username = username;
-	}
-
-	public void setPassword(String password) {
-		this.password = password;
 	}
 
 	public void setAuthorities(Collection<? extends GrantedAuthority> authorities) {

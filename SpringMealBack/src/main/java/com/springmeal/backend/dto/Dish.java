@@ -30,6 +30,7 @@ public class Dish {
 	private int id;
 	private String name; 
 	private String description;
+	private double price;
 	
 	
 	@OneToMany(fetch = FetchType.LAZY)
@@ -51,10 +52,11 @@ public class Dish {
 
 	}
 
-	public Dish(String name, String description, byte[] image, Category category) {
+	public Dish(String name, String description, byte[] image, double price, Category category) {
 		this.name = name;
 		this.description = description;
 		this.image = image;
+		this.price = price;
 		this.category = category;
 
 	}
@@ -116,6 +118,15 @@ public class Dish {
 
 	public void setOrderDish(List<OrderDish> orderDish) {
 		this.orderDish = orderDish;
+	}
+	
+
+	public double getPrice() {
+		return price;
+	}
+
+	public void setPrice(double price) {
+		this.price = price;
 	}
 
 	// TO STRING

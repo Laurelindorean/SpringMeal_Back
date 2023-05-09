@@ -52,16 +52,16 @@ public class DishAllergensController {
 	public DishAllergens actualizarDishAllergens(@PathVariable(name = "id") int id,
 			@RequestBody DishAllergens dishAllergens) {
 
-		DishAllergens dishAllergens_seleccionado = new DishAllergens();
-		DishAllergens dishAllergens_actualizado = new DishAllergens();
-		dishAllergens_seleccionado = dishAllergensServiceImpl.dishAllergensById(id);
-		dishAllergens_seleccionado.setId(id);
-		dishAllergens_seleccionado.setAllergens(dishAllergens.getAllergens());
-		dishAllergens_seleccionado.setDish(dishAllergens.getDish());
+		DishAllergens dishAllergenSelected = new DishAllergens();
+		DishAllergens dishAllergensUpdated = new DishAllergens();
+		dishAllergenSelected = dishAllergensServiceImpl.dishAllergensById(id);
+		dishAllergenSelected.setId(id);
+		dishAllergenSelected.setAllergens(dishAllergens.getAllergens());
+		dishAllergenSelected.setDish(dishAllergens.getDish());
 
-		dishAllergens_actualizado = dishAllergensServiceImpl.actualizarDishAllergens(dishAllergens_seleccionado);
+		dishAllergensUpdated = dishAllergensServiceImpl.actualizarDishAllergens(dishAllergenSelected);
 
-		return dishAllergens_actualizado;
+		return dishAllergensUpdated;
 	}
 
 	@DeleteMapping("/dishallergens/{id}")
