@@ -62,7 +62,7 @@ public class Category {
 	
 	
 	@JsonIgnore
-	@OneToMany(fetch = FetchType.LAZY, findBy = "Dish")
+	@OneToMany(fetch = FetchType.LAZY)
 	public List<Dish> getDish() {
 		return dish;
 	}
