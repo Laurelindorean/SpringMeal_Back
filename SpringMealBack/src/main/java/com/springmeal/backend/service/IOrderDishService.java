@@ -5,6 +5,7 @@ package com.springmeal.backend.service;
 
 import java.util.List;
 
+import com.springmeal.backend.dto.Order;
 import com.springmeal.backend.dto.OrderDish;
 
 /**
@@ -23,4 +24,6 @@ public interface IOrderDishService {
 	public OrderDish updateOrderDish(OrderDish orderDish);
 
 	public void deleteOrderDish(int id);
+
+	public List<OrderDish> findByOrder(Order order);
 }

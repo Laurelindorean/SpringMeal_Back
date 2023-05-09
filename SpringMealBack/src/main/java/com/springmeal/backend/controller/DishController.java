@@ -58,7 +58,7 @@ public class DishController {
 	}
 	
 	@GetMapping("/dishes/category")
-	public List<Dish> findByName(@RequestBody Category category) {
+	public List<Dish> findByCategory(@RequestBody Category category) {
 		return dishServiceImpl.findByCategory(category);
 	}
 

@@ -17,6 +17,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.springmeal.backend.dto.Order;
+import com.springmeal.backend.dto.Slot;
+import com.springmeal.backend.dto.User;
 import com.springmeal.backend.service.OrderServiceImpl;
 
 /**
@@ -46,11 +48,6 @@ public class OrderController {
 		order_id = orderServiceImpl.findById(id);
 		return order_id;
 	}
-	
-	@GetMapping("/orders/date/{date}")
-	public List<Order> findByDate(@PathVariable(name = "date") Date date) {
-		return orderServiceImpl.findByDate(date);
-	}
 
 	@PutMapping("/orders/{id}")
 	public Order updateOrder(@PathVariable(name = "id") int id, @RequestBody Order order) {
@@ -66,5 +63,36 @@ public class OrderController {
 	@DeleteMapping("/orders/{id}")
 	public void deleteOrder(@PathVariable(name = "id") int id) {
 		orderServiceImpl.deleteOrder(id);
+	}
+
+	@GetMapping("/orders/user")
+	public List<Order> findByUser(@RequestBody User user) {
+		return orderServiceImpl.findByUser(user);
+	}
+	
+	@GetMapping("/orders/date/{date}")
+	public List<Order> findByDate(@PathVariable("date") Date date) {
+		return orderServiceImpl.findByDate(date, "=");
+	}
+	@GetMapping("/orders/future")
+	public List<Order> findByDate() {
+		Date date = new Date(System.currentTimeMillis());
+		return orderServiceImpl.findByDate(date, ">=");
+	}
+
+	@GetMapping("/orders/user/date/{date}")
+	public List<Order> findByUserDate(@RequestBody User user, @PathVariable("date") Date date) {
+		return orderServiceImpl.findByUserDate(user, date, "=");
+	}
+
+	@GetMapping("/orders/user/future")
+	public List<Order> findByUserDate(@RequestBody User user) {
+		Date date = new Date(System.currentTimeMillis());
+		return orderServiceImpl.findByUserDate(user, date, ">=");
+	}
+
+	@GetMapping("/orders/slot/date/{date}")
+	public List<Order> findBySlotDate(@RequestBody Slot slot, @PathVariable("date") Date date) {
+		return orderServiceImpl.findBySlotDate(slot, date);
 	}
 }

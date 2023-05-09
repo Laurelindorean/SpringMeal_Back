@@ -3,6 +3,7 @@
  */
 package com.springmeal.backend.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +16,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.springmeal.backend.dto.Dish;
+import com.springmeal.backend.dto.Order;
 import com.springmeal.backend.dto.OrderDish;
 import com.springmeal.backend.service.OrderDishServiceImpl;
 
@@ -59,5 +62,30 @@ public class OrderDishController {
 	public void deleteOrderDish(@PathVariable(name = "id") int id) {
 		orderDishServiceImpl.deleteOrderDish(id);
 	}
+
+	@GetMapping("/orderdish/order")
+	public List<Dish> findByOrder(@RequestBody Order order) {
+		List<OrderDish> in = orderDishServiceImpl.findByOrder(order);
+		List<Dish> out = new ArrayList<Dish>();
+		for (OrderDish item : in) {
+			out.add(item.getDish());
+		}
+		return out;
+		/*List<OrderDish> in = orderDishServiceImpl.findByOrder(order);
+		List<Dish> out = new ArrayList<Dish>();
+		for (OrderDish item : in) {
+			out.add(item.getDish());
+		}
+		return out;*/
+		
+	}
+
+	/*public static void main(String[] args) {
+		List<OrderDish> in = new ArrayList<OrderDish>();
+		List<Dish> out = new ArrayList<Dish>();
+		for (OrderDish item : in) {
+			out.add(item.getDish());
+		}
+	}*/
 
 }
