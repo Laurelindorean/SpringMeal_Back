@@ -40,9 +40,9 @@ public class CategoryController {
 	}
 
 	@GetMapping("/categories/{id}")
-	public Category categoryById(@PathVariable(name = "id") int id) {
+	public Category findById(@PathVariable(name = "id") int id) {
 		Category category = new Category();
-		category = categoryServiceImpl.categoryById(id);
+		category = categoryServiceImpl.findById(id);
 		return category;
 	}
 
@@ -51,7 +51,7 @@ public class CategoryController {
 
 		Category category_seleccionado = new Category();
 		Category category_actualizado = new Category();
-		category_seleccionado = categoryServiceImpl.categoryById(id);
+		category_seleccionado = categoryServiceImpl.findById(id);
 		category_seleccionado.setId(id);
 		category_seleccionado.setName(category.getName());
 

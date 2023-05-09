@@ -41,16 +41,16 @@ public class SlotController {
 	}
 
 	@GetMapping("/slot/{id}")
-	public Slot slotByID(@PathVariable(name = "id") int id) {
+	public Slot findByID(@PathVariable(name = "id") int id) {
 		Slot slot_id = new Slot();
-		slot_id = slotServiceImpl.slotByID(id);
+		slot_id = slotServiceImpl.findByID(id);
 		return slot_id;
 	}
 
 	@PutMapping("/slot/{id}")
 	public Slot updateSlot(@PathVariable(name = "id") int id, @RequestBody Slot slot) {
 		Slot slot_sel = new Slot();
-		slot_sel = slotServiceImpl.slotByID(id);
+		slot_sel = slotServiceImpl.findByID(id);
 		slot_sel.setStart(slot.getStart());
 		slot_sel.setEnd(slot.getEnd());
 		return slotServiceImpl.updateSlot(slot_sel);

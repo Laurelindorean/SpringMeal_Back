@@ -40,9 +40,9 @@ public class RoleController {
 	}
 
 	@GetMapping("/roles/{codigo}")
-	public Role roleById(@PathVariable(name = "codigo") int codigo) {
+	public Role findById(@PathVariable(name = "codigo") int codigo) {
 		Role role = new Role();
-		role = roleServiceImpl.roleById(codigo);
+		role = roleServiceImpl.findById(codigo);
 		return role;
 	}
 
@@ -51,7 +51,7 @@ public class RoleController {
 
 		Role role_seleccionado = new Role();
 		Role role_actualizado = new Role();
-		role_seleccionado = roleServiceImpl.roleById(codigo);
+		role_seleccionado = roleServiceImpl.findById(codigo);
 		role_seleccionado.setName(role.getName());
 
 		role_actualizado = roleServiceImpl.actualizarRole(role_seleccionado);

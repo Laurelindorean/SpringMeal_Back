@@ -32,7 +32,7 @@ public class OrderDishServiceImpl implements IOrderDishService {
 	}
 
 	@Override
-	public OrderDish orderDishById(int id) {
+	public OrderDish findById(int id) {
 		return iOrderDishDAO.findById(id).get();
 	}
 

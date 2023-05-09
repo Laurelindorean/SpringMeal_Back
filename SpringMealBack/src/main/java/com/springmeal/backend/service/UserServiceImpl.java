@@ -32,7 +32,7 @@ public class UserServiceImpl implements IUserService {
 	}
 
 	@Override
-	public User userById(int codigo) {
+	public User findById(int codigo) {
 		return iUserDAO.findById(codigo).get();
 	}
 

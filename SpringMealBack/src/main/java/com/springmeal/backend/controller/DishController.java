@@ -20,7 +20,7 @@ import com.springmeal.backend.dto.Category;
 import com.springmeal.backend.service.DishServiceImpl;
 
 /**
- * @author aitor
+ * @author aitor, joan
  *
  */
 @RestController
@@ -41,20 +41,25 @@ public class DishController {
 	}
 
 	@GetMapping("/dishes/{id}")
-	public Dish dishById(@PathVariable(name = "id") int id) {
+	public Dish findById(@PathVariable(name = "id") int id) {
 		Dish dish = new Dish();
-		dish = dishServiceImpl.dishById(id);
+		dish = dishServiceImpl.findById(id);
 		return dish;
 	}
 
-	@GetMapping("/dishes/name/{name}")
-	public List<Dish> dishByName(@PathVariable(name = "name") String name) {
-		return dishServiceImpl.dishByName(name);
+	/*@GetMapping("/dishes/name/{name}")
+	public List<Dish> findByName(@PathVariable(name = "name") String name) {
+		return dishServiceImpl.findByName(name);
+	}*/
+	
+	@GetMapping("/dishes/partialName/{name}")
+	public List<Dish> findByPartialName(@PathVariable(name = "name") String name) {
+		return dishServiceImpl.findByPartialName(name);
 	}
 	
 	@GetMapping("/dishes/category")
-	public List<Dish> dishByName(@RequestBody Category category) {
-		return dishServiceImpl.dishByCategory(category);
+	public List<Dish> findByName(@RequestBody Category category) {
+		return dishServiceImpl.findByCategory(category);
 	}
 
 	@PutMapping("/dishes/{id}")
@@ -62,7 +67,7 @@ public class DishController {
 
 		Dish dish_seleccionado = new Dish();
 		Dish dish_actualizado = new Dish();
-		dish_seleccionado = dishServiceImpl.dishById(id);
+		dish_seleccionado = dishServiceImpl.findById(id);
 		dish_seleccionado.setId(id);
 		dish_seleccionado.setCategory(dish.getCategory());
 		dish_seleccionado.setDescription(dish.getDescription());

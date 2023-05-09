@@ -17,7 +17,7 @@ public interface IRoleService {
 
 	public Role guardarRole(Role role); // Guarda un departamento CREATE
 
-	public Role roleById(int codigo); // Leer datos de un departamento READ
+	public Role findById(int codigo); // Leer datos de un departamento READ
 
 	public Role actualizarRole(Role role); // Actualiza datos del departamento UPDATE
 

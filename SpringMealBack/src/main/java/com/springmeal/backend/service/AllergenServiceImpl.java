@@ -32,7 +32,7 @@ public class AllergenServiceImpl implements IAllergenService {
 	}
 
 	@Override
-	public Allergen allergenById(int codigo) {
+	public Allergen findById(int codigo) {
 		return iAllergenDAO.findById(codigo).get();
 	}
 

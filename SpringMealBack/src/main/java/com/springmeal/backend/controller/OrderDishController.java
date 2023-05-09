@@ -40,16 +40,16 @@ public class OrderDishController {
 	}
 
 	@GetMapping("/orderdish/{id}")
-	public OrderDish orderDishById(@PathVariable(name = "id") int id) {
+	public OrderDish findById(@PathVariable(name = "id") int id) {
 		OrderDish orderDish_id = new OrderDish();
-		orderDish_id = orderDishServiceImpl.orderDishById(id);
+		orderDish_id = orderDishServiceImpl.findById(id);
 		return orderDish_id;
 	}
 
 	@PutMapping("/orderdish/{id}")
 	public OrderDish updateOrderDish(@PathVariable(name = "id") int id, @RequestBody OrderDish orderDish) {
 		OrderDish orderDish_sel = new OrderDish();
-		orderDish_sel = orderDishServiceImpl.orderDishById(id);
+		orderDish_sel = orderDishServiceImpl.findById(id);
 		orderDish_sel.setDish(orderDish.getDish());
 		orderDish_sel.setOrder(orderDish.getOrder());
 		return orderDishServiceImpl.updateOrderDish(orderDish_sel);

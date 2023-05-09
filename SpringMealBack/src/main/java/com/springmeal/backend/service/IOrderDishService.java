@@ -18,7 +18,7 @@ public interface IOrderDishService {
 
 	public OrderDish saveOrderDish(OrderDish orderDish);
 
-	public OrderDish orderDishById(int id);
+	public OrderDish findById(int id);
 
 	public OrderDish updateOrderDish(OrderDish orderDish);
 

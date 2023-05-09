@@ -32,7 +32,7 @@ public class DishAllergensServiceImpl implements IDishAllergensService {
 	}
 
 	@Override
-	public DishAllergens dishAllergensById(int id) {
+	public DishAllergens findById(int id) {
 		return iDishAllergensDAO.findById(id).get();
 	}
 

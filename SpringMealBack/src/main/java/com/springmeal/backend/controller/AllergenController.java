@@ -40,9 +40,9 @@ public class AllergenController {
 	}
 
 	@GetMapping("/allergens/{codigo}")
-	public Allergen allergenById(@PathVariable(name = "codigo") int codigo) {
+	public Allergen findById(@PathVariable(name = "codigo") int codigo) {
 		Allergen allergen = new Allergen();
-		allergen = allergenServiceImpl.allergenById(codigo);
+		allergen = allergenServiceImpl.findById(codigo);
 		return allergen;
 	}
 
@@ -51,7 +51,7 @@ public class AllergenController {
 
 		Allergen allergen_seleccionado = new Allergen();
 		Allergen allergen_actualizado = new Allergen();
-		allergen_seleccionado = allergenServiceImpl.allergenById(codigo);
+		allergen_seleccionado = allergenServiceImpl.findById(codigo);
 		allergen_seleccionado.setName(allergen.getName());
 
 		allergen_actualizado = allergenServiceImpl.actualizarAllergen(allergen_seleccionado);

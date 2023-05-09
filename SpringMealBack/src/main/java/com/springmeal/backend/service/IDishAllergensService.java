@@ -17,7 +17,7 @@ public interface IDishAllergensService {
 
 	public DishAllergens guardarDishAllergens(DishAllergens dishAllergens);
 
-	public DishAllergens dishAllergensById(int id);
+	public DishAllergens findById(int id);
 
 	public DishAllergens actualizarDishAllergens(DishAllergens dishAllergens);
 

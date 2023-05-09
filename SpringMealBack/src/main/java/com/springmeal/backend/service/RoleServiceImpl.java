@@ -32,7 +32,7 @@ public class RoleServiceImpl implements IRoleService {
 	}
 
 	@Override
-	public Role roleById(int codigo) {
+	public Role findById(int codigo) {
 		return iRoleDAO.findById(codigo).get();
 	}
 

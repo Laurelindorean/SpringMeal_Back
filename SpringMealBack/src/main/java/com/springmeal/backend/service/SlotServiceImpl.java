@@ -32,7 +32,7 @@ public class SlotServiceImpl implements ISlotService {
 	}
 
 	@Override
-	public Slot slotByID(int id) {
+	public Slot findByID(int id) {
 		return iSlotDAO.findById(id).get();
 	}
 
