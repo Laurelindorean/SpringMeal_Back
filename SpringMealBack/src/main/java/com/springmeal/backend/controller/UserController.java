@@ -6,6 +6,7 @@ package com.springmeal.backend.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -30,16 +31,19 @@ public class UserController {
 	UserServiceImpl userServiceImpl;
 
 	@GetMapping("/users")
+	@PreAuthorize("hasRole('admin')")
 	public List<User> listarUsers() {
 		return userServiceImpl.listarUsers();
 	}
 
 	@PostMapping("/users")
+	@PreAuthorize("hasRole('admin')")
 	public User guardarUser(@RequestBody User user) {
 		return userServiceImpl.guardarUser(user);
 	}
 
 	@GetMapping("/users/{codigo}")
+	@PreAuthorize("hasRole('admin')")
 	public User userById(@PathVariable(name = "codigo") int codigo) {
 		User user = new User();
 		user = userServiceImpl.userById(codigo);
@@ -56,7 +60,6 @@ public class UserController {
 		user_seleccionado.setEmail(user.getEmail());
 		user_seleccionado.setName(user.getName());
 		user_seleccionado.setPassword(user.getPassword());
-		user_seleccionado.setRole(user.getRole());
 		user_seleccionado.setSurname(user.getSurname());
 
 		user_actualizado = userServiceImpl.actualizarUser(user_seleccionado);
@@ -65,6 +68,7 @@ public class UserController {
 	}
 
 	@DeleteMapping("/users/{codigo}")
+	@PreAuthorize("hasRole('admin')")
 	public void eliminarUser(@PathVariable(name = "codigo") int codigo) {
 		userServiceImpl.eliminarUser(codigo);
 	}

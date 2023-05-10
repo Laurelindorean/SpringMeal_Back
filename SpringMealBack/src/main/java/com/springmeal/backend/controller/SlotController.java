@@ -6,6 +6,7 @@ package com.springmeal.backend.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -36,11 +37,13 @@ public class SlotController {
 	}
 
 	@PostMapping("/slot")
+	@PreAuthorize("hasRole('admin')")
 	public Slot saveSlot(@RequestBody Slot slot) {
 		return slotServiceImpl.saveSlot(slot);
 	}
 
 	@GetMapping("/slot/{id}")
+	@PreAuthorize("hasRole('admin')")
 	public Slot slotByID(@PathVariable(name = "id") int id) {
 		Slot slot_id = new Slot();
 		slot_id = slotServiceImpl.slotByID(id);
@@ -48,6 +51,7 @@ public class SlotController {
 	}
 
 	@PutMapping("/slot/{id}")
+	@PreAuthorize("hasRole('admin')")
 	public Slot updateSlot(@PathVariable(name = "id") int id, @RequestBody Slot slot) {
 		Slot slot_sel = new Slot();
 		slot_sel = slotServiceImpl.slotByID(id);
@@ -57,6 +61,7 @@ public class SlotController {
 	}
 
 	@DeleteMapping("/slot/{id}")
+	@PreAuthorize("hasRole('admin')")
 	public void deleteSlot(@PathVariable(name = "id") int id) {
 		slotServiceImpl.deleteSlot(id);
 	}

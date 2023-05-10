@@ -6,6 +6,7 @@ package com.springmeal.backend.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -30,6 +31,7 @@ public class OrderController {
 	OrderServiceImpl orderServiceImpl;
 
 	@GetMapping("/orders")
+	@PreAuthorize("hasRole('admin')")
 	public List<Order> listOrder() {
 		return orderServiceImpl.listOrder();
 	}
@@ -47,17 +49,18 @@ public class OrderController {
 	}
 
 	@PutMapping("/orders/{id}")
+	@PreAuthorize("hasRole('admin')")
 	public Order updateOrder(@PathVariable(name = "id") int id, @RequestBody Order order) {
 		Order order_sel = new Order();
 		order_sel = orderServiceImpl.orderById(id);
 		order_sel.setDate(order.getDate());
 		order_sel.setSlot(order.getSlot());
-		// this line has an error because we haven't implemented the User Entity yet
 		order_sel.setUser(order.getUser());
 		return orderServiceImpl.updateOrder(order_sel);
 	}
 
 	@DeleteMapping("/orders/{id}")
+	@PreAuthorize("hasRole('admin')")
 	public void deleteOrder(@PathVariable(name = "id") int id) {
 		orderServiceImpl.deleteOrder(id);
 	}

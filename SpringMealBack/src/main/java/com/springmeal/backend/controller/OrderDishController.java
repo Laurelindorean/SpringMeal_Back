@@ -6,6 +6,7 @@ package com.springmeal.backend.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -30,6 +31,7 @@ public class OrderDishController {
 	OrderDishServiceImpl orderDishServiceImpl;
 
 	@GetMapping("/orderdish")
+	@PreAuthorize("hasRole('admin')")
 	public List<OrderDish> listOrderDish() {
 		return orderDishServiceImpl.listOrderDish();
 	}
@@ -40,6 +42,7 @@ public class OrderDishController {
 	}
 
 	@GetMapping("/orderdish/{id}")
+	@PreAuthorize("hasRole('admin')")
 	public OrderDish orderDishById(@PathVariable(name = "id") int id) {
 		OrderDish orderDish_id = new OrderDish();
 		orderDish_id = orderDishServiceImpl.orderDishById(id);
@@ -56,6 +59,7 @@ public class OrderDishController {
 	}
 
 	@DeleteMapping("/orderdish/{id}")
+	@PreAuthorize("hasRole('admin')")
 	public void deleteOrderDish(@PathVariable(name = "id") int id) {
 		orderDishServiceImpl.deleteOrderDish(id);
 	}

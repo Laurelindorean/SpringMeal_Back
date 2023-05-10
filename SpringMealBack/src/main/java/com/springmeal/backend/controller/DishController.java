@@ -6,6 +6,7 @@ package com.springmeal.backend.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -35,6 +36,7 @@ public class DishController {
 	}
 
 	@PostMapping("/dishes")
+	@PreAuthorize("hasRole('admin')")
 	public Dish guardarDish(@RequestBody Dish dish) {
 		return dishServiceImpl.guardarDish(dish);
 	}
@@ -47,6 +49,7 @@ public class DishController {
 	}
 
 	@PutMapping("/dishes/{id}")
+	@PreAuthorize("hasRole('admin')")
 	public Dish actualizarDish(@PathVariable(name = "id") int id, @RequestBody Dish dish) {
 
 		Dish dishSelected = new Dish();
@@ -65,6 +68,7 @@ public class DishController {
 	}
 
 	@DeleteMapping("/dishes/{id}")
+	@PreAuthorize("hasRole('admin')")
 	public void eliminarDish(@PathVariable(name = "id") int id) {
 		dishServiceImpl.eliminarDish(id);
 	}

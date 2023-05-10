@@ -3,10 +3,15 @@
  */
 package com.springmeal.backend.security.service;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashSet;
+import java.util.List;
 import java.util.Objects;
+import java.util.Set;
 
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.springmeal.backend.dto.User;
@@ -27,20 +32,17 @@ public class UserDetailsImpl implements UserDetails {
 
 	private Collection<? extends GrantedAuthority> authorities;
 
-	public UserDetailsImpl(String username, String password) {
+	public UserDetailsImpl(String username, String password, Collection<? extends GrantedAuthority> authorities ) {
 		super();
 		this.username = username;
 		this.password = password;
+		this.authorities = authorities;
 	}
 
 	public static UserDetailsImpl build(User user) {
-		// TODO
-		/*
-		 * List<GrantedAuthority> authorities = user.getRoles().stream() .map(role ->
-		 * new
-		 * SimpleGrantedAuthority(role.getName().name())).collect(Collectors.toList());
-		 */
-		return new UserDetailsImpl(user.getUsername(), user.getPassword());
+		List<GrantedAuthority> authorities = new ArrayList<>();
+		authorities.add(new SimpleGrantedAuthority(user.getRole().getName()));
+		return new UserDetailsImpl(user.getUsername(), user.getPassword(), authorities);
 	}
 
 	@Override

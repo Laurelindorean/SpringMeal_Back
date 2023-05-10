@@ -6,6 +6,7 @@ package com.springmeal.backend.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -35,6 +36,7 @@ public class CategoryController {
 	}
 
 	@PostMapping("/categories")
+	@PreAuthorize("hasRole('admin')")
 	public Category guardarCategory(@RequestBody Category category) {
 		return categoryServiceImpl.guardarCategory(category);
 	}
@@ -47,6 +49,7 @@ public class CategoryController {
 	}
 
 	@PutMapping("/categories/{id}")
+	@PreAuthorize("hasRole('admin')")
 	public Category actualizarCategory(@PathVariable(name = "id") int id, @RequestBody Category category) {
 
 		Category category_seleccionado = new Category();
@@ -61,6 +64,7 @@ public class CategoryController {
 	}
 
 	@DeleteMapping("/categories/{id}")
+	@PreAuthorize("hasRole('admin')")
 	public void eliminarCategory(@PathVariable(name = "id") int id) {
 		categoryServiceImpl.eliminarCategory(id);
 	}

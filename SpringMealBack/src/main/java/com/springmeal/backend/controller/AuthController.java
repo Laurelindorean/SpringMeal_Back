@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-
+import com.springmeal.backend.dao.IRoleDAO;
 import com.springmeal.backend.dao.IUserDAO;
 import com.springmeal.backend.dto.User;
 import com.springmeal.backend.dto.auth.JwtResponse;
@@ -35,14 +35,16 @@ public class AuthController {
 
 	private AuthenticationManager authenticationManager;
 	private IUserDAO userDAO;
+	private IRoleDAO roleDAO;
 	private PasswordEncoder encoder;
 	private JwtTokenProvider jwtUtils;
 
-	public AuthController(AuthenticationManager authenticationManager, IUserDAO userDAO, PasswordEncoder encoder,
+	public AuthController(AuthenticationManager authenticationManager, IUserDAO userDAO, IRoleDAO roleDAO, PasswordEncoder encoder,
 			JwtTokenProvider jwtUtils) {
 		super();
 		this.authenticationManager = authenticationManager;
 		this.userDAO = userDAO;
+		this.roleDAO = roleDAO;
 		this.encoder = encoder;
 		this.jwtUtils = jwtUtils;
 	}
@@ -58,6 +60,7 @@ public class AuthController {
 		UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
 		return ResponseEntity.ok(new JwtResponse(jwt, userDetails.getUsername()));
 	}
+	
 	@PostMapping("/signup")
 	public ResponseEntity<?> registerUser(@RequestBody SignupRequest signUpRequest){
 		if(this.userDAO.findByUsername(signUpRequest.getUsername()) != null) {
@@ -69,13 +72,10 @@ public class AuthController {
 		user.setSurname(signUpRequest.getSurname());
 		user.setUsername(signUpRequest.getUsername());
 		user.setPassword(this.encoder.encode(signUpRequest.getPassword()));
-		//TODO
-		//Falta poner el setRole por defecto como ROLE_USER
-		user.setRole(user.getRole());
+		user.setRole(this.roleDAO.findByName("ROLE_user").orElseThrow(() -> new RuntimeException("Not found")));
 		user.setEmail(signUpRequest.getEmail());
 		user.setDni(signUpRequest.getDni());
 		this.userDAO.save(user);
 		return ResponseEntity.ok(null);
-		
 	}
 }

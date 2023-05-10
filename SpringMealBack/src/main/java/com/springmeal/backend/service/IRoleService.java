@@ -22,4 +22,8 @@ public interface IRoleService {
 	public Role actualizarRole(Role role); // Actualiza datos del departamento UPDATE
 
 	public void eliminarRole(int codigo);// Elimina el departamento DELETE
+	
+	public Role findByRole(String role);
+
+	public void setRoleAdminByIdUser(int idUser);
 }
