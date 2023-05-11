@@ -13,4 +13,4 @@ import com.springmeal.backend.dto.Allergen;
  */
 public interface IAllergenDAO extends JpaRepository<Allergen, Integer> {
 
-}
+} 
