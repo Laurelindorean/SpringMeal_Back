@@ -6,6 +6,7 @@ package com.springmeal.backend.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -36,6 +37,7 @@ public class DishController {
 	}
 
 	@PostMapping("/dishes")
+	@PreAuthorize("hasRole('admin')")
 	public Dish guardarDish(@RequestBody Dish dish) {
 		return dishServiceImpl.guardarDish(dish);
 	}
@@ -63,23 +65,26 @@ public class DishController {
 	}
 
 	@PutMapping("/dishes/{id}")
+	@PreAuthorize("hasRole('admin')")
 	public Dish actualizarDish(@PathVariable(name = "id") int id, @RequestBody Dish dish) {
+		Dish dishSelected = new Dish();
+		Dish dishUpdated = new Dish();
+		dishSelected = dishServiceImpl.findById(id);
+		dishSelected.setId(id);
+		dishSelected.setCategory(dish.getCategory());
+		dishSelected.setDescription(dish.getDescription());
+		dishSelected.setImage(dish.getImage());
+		dishSelected.setPrice(dish.getPrice());
+		dishSelected.setName(dish.getName());
 
-		Dish dish_seleccionado = new Dish();
-		Dish dish_actualizado = new Dish();
-		dish_seleccionado = dishServiceImpl.findById(id);
-		dish_seleccionado.setId(id);
-		dish_seleccionado.setCategory(dish.getCategory());
-		dish_seleccionado.setDescription(dish.getDescription());
-		dish_seleccionado.setImage(dish.getImage());
-		dish_seleccionado.setName(dish.getName());
 
-		dish_actualizado = dishServiceImpl.actualizarDish(dish_seleccionado);
+		dishUpdated = dishServiceImpl.actualizarDish(dishSelected);
 
-		return dish_actualizado;
+		return dishUpdated;
 	}
 
 	@DeleteMapping("/dishes/{id}")
+	@PreAuthorize("hasRole('admin')")
 	public void eliminarDish(@PathVariable(name = "id") int id) {
 		dishServiceImpl.eliminarDish(id);
 	}

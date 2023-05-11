@@ -6,6 +6,7 @@ package com.springmeal.backend.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -35,6 +36,7 @@ public class AllergenController {
 	}
 
 	@PostMapping("/allergens")
+	@PreAuthorize("hasRole('admin')")
 	public Allergen guardarAllergen(@RequestBody Allergen allergen) {
 		return allergenServiceImpl.guardarAllergen(allergen);
 	}
@@ -47,6 +49,7 @@ public class AllergenController {
 	}
 
 	@PutMapping("/allergens/{codigo}")
+	@PreAuthorize("hasRole('admin')")
 	public Allergen actualizarAllergen(@PathVariable(name = "codigo") int codigo, @RequestBody Allergen allergen) {
 
 		Allergen allergen_seleccionado = new Allergen();
@@ -60,6 +63,7 @@ public class AllergenController {
 	}
 
 	@DeleteMapping("/allergens/{codigo}")
+	@PreAuthorize("hasRole('admin')")
 	public void eliminarAllergen(@PathVariable(name = "codigo") int codigo) {
 		allergenServiceImpl.eliminarAllergen(codigo);
 	}

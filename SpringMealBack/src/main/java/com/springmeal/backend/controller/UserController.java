@@ -6,6 +6,10 @@ package com.springmeal.backend.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpRequest;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -15,8 +19,14 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.springmeal.backend.dao.IUserDAO;
 import com.springmeal.backend.dto.User;
+import com.springmeal.backend.dto.user.UserDTO;
+import com.springmeal.backend.security.service.UserDetailsImpl;
 import com.springmeal.backend.service.UserServiceImpl;
+import com.springmeal.backend.util.SpringMealUtils;
+
+import jakarta.servlet.http.HttpServletRequest;
 
 /**
  * @author joan
@@ -27,14 +37,16 @@ import com.springmeal.backend.service.UserServiceImpl;
 public class UserController {
 
 	@Autowired
-	UserServiceImpl userServiceImpl;
+	private UserServiceImpl userServiceImpl;
 
 	@GetMapping("/users")
+	@PreAuthorize("hasRole('admin')")
 	public List<User> listarUsers() {
 		return userServiceImpl.listarUsers();
 	}
 
 	@PostMapping("/users")
+	@PreAuthorize("hasRole('admin')")
 	public User guardarUser(@RequestBody User user) {
 		return userServiceImpl.guardarUser(user);
 	}
@@ -44,6 +56,15 @@ public class UserController {
 		User user = new User();
 		user = userServiceImpl.findById(codigo);
 		return user;
+	}
+	
+	public User userById(@PathVariable(name = "codigo") int codigo) {	
+	
+		if(SpringMealUtils.getUserDetails().getId() != codigo) {
+			throw new RuntimeException("No tienes permisos para ver este id");
+		}
+			
+		return userServiceImpl.findById(codigo);
 	}
 
 	@PutMapping("/users/{codigo}")
@@ -56,7 +77,6 @@ public class UserController {
 		user_seleccionado.setEmail(user.getEmail());
 		user_seleccionado.setName(user.getName());
 		user_seleccionado.setPassword(user.getPassword());
-		user_seleccionado.setRole(user.getRole());
 		user_seleccionado.setSurname(user.getSurname());
 
 		user_actualizado = userServiceImpl.actualizarUser(user_seleccionado);
@@ -65,6 +85,7 @@ public class UserController {
 	}
 
 	@DeleteMapping("/users/{codigo}")
+	@PreAuthorize("hasRole('admin')")
 	public void eliminarUser(@PathVariable(name = "codigo") int codigo) {
 		userServiceImpl.eliminarUser(codigo);
 	}

@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import com.springmeal.backend.dao.IRoleDAO;
 import com.springmeal.backend.dto.Role;
+import com.springmeal.backend.dto.User;
 
 /**
  * @author Joan
@@ -20,6 +21,8 @@ public class RoleServiceImpl implements IRoleService {
 
 	@Autowired
 	IRoleDAO iRoleDAO;
+	@Autowired
+	IUserService userService;
 
 	@Override
 	public List<Role> listarRoles() {
@@ -45,6 +48,19 @@ public class RoleServiceImpl implements IRoleService {
 	public void eliminarRole(int codigo) {
 		iRoleDAO.deleteById(codigo);
 
+	}
+
+	@Override
+	public Role findByRole(String role) {
+		return iRoleDAO.findByName(role).get();
+	}
+
+	@Override
+	public void setRoleAdminByIdUser(int idUser) {
+
+		User userEntity = this.userService.findById(idUser);
+		userEntity.setRole(this.iRoleDAO.findByName("ROLE_admin").get());
+		this.userService.actualizarUser(userEntity);
 	}
 
 }

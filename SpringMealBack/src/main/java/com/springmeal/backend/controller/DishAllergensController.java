@@ -6,6 +6,7 @@ package com.springmeal.backend.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -15,9 +16,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.springmeal.backend.dto.Category;
 import com.springmeal.backend.dto.DishAllergens;
-import com.springmeal.backend.service.CategoryServiceImpl;
 import com.springmeal.backend.service.DishAllergensServiceImpl;
 
 /**
@@ -37,6 +36,7 @@ public class DishAllergensController {
 	}
 
 	@PostMapping("/dishallergens")
+	@PreAuthorize("hasRole('admin')")
 	public DishAllergens guardarDishAllergens(@RequestBody DishAllergens dishAllergens) {
 		return dishAllergensServiceImpl.guardarDishAllergens(dishAllergens);
 	}
@@ -49,22 +49,24 @@ public class DishAllergensController {
 	}
 
 	@PutMapping("/dishallergens/{id}")
+	@PreAuthorize("hasRole('admin')")
 	public DishAllergens actualizarDishAllergens(@PathVariable(name = "id") int id,
 			@RequestBody DishAllergens dishAllergens) {
+		DishAllergens dishAllergenSelected = new DishAllergens();
+		DishAllergens dishAllergensUpdated = new DishAllergens();
+		dishAllergenSelected = dishAllergensServiceImpl.findById(id);
+		dishAllergenSelected.setId(id);
+		dishAllergenSelected.setAllergens(dishAllergens.getAllergens());
+		dishAllergenSelected.setDish(dishAllergens.getDish());
 
-		DishAllergens dishAllergens_seleccionado = new DishAllergens();
-		DishAllergens dishAllergens_actualizado = new DishAllergens();
-		dishAllergens_seleccionado = dishAllergensServiceImpl.findById(id);
-		dishAllergens_seleccionado.setId(id);
-		dishAllergens_seleccionado.setAllergens(dishAllergens.getAllergens());
-		dishAllergens_seleccionado.setDish(dishAllergens.getDish());
 
-		dishAllergens_actualizado = dishAllergensServiceImpl.actualizarDishAllergens(dishAllergens_seleccionado);
+		dishAllergensUpdated = dishAllergensServiceImpl.actualizarDishAllergens(dishAllergenSelected);
 
-		return dishAllergens_actualizado;
+		return dishAllergensUpdated;
 	}
 
 	@DeleteMapping("/dishallergens/{id}")
+	@PreAuthorize("hasRole('admin')")
 	public void eliminarDishAllergens(@PathVariable(name = "id") int id) {
 		dishAllergensServiceImpl.eliminarDishAllergens(id);
 	}
