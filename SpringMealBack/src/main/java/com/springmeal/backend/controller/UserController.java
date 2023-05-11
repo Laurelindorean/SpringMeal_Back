@@ -53,17 +53,10 @@ public class UserController {
 
 	@GetMapping("/users/{codigo}")
 	public User findById(@PathVariable(name = "codigo") int codigo) {
-		User user = new User();
-		user = userServiceImpl.findById(codigo);
-		return user;
-	}
-	
-	public User userById(@PathVariable(name = "codigo") int codigo) {	
-	
-		if(SpringMealUtils.getUserDetails().getId() != codigo) {
+		if (SpringMealUtils.getUserDetails().getId() != codigo) {
 			throw new RuntimeException("No tienes permisos para ver este id");
 		}
-			
+
 		return userServiceImpl.findById(codigo);
 	}
 
