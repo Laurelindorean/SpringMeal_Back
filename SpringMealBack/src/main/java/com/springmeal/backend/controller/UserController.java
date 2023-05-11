@@ -24,6 +24,7 @@ import com.springmeal.backend.dto.User;
 import com.springmeal.backend.dto.user.UserDTO;
 import com.springmeal.backend.security.service.UserDetailsImpl;
 import com.springmeal.backend.service.UserServiceImpl;
+import com.springmeal.backend.util.SpringMealUtils;
 
 import jakarta.servlet.http.HttpServletRequest;
 
@@ -37,8 +38,6 @@ public class UserController {
 
 	@Autowired
 	private UserServiceImpl userServiceImpl;
-	@Autowired
-	private IUserDAO userDAO;
 
 	@GetMapping("/users")
 	@PreAuthorize("hasRole('admin')")
@@ -54,10 +53,8 @@ public class UserController {
 
 	@GetMapping("/users/{codigo}")
 	public User userById(@PathVariable(name = "codigo") int codigo) {	
-		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-		User userReal = this.userDAO.findByUsername(((UserDetailsImpl)authentication.getPrincipal()).getUsername());
-		
-		if(userReal.getId() != codigo) {
+	
+		if(SpringMealUtils.getUserDetails().getId() != codigo) {
 			throw new RuntimeException("No tienes permisos para ver este id");
 		}
 			
