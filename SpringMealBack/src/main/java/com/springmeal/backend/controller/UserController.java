@@ -6,7 +6,10 @@ package com.springmeal.backend.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpRequest;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -16,8 +19,13 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.springmeal.backend.dao.IUserDAO;
 import com.springmeal.backend.dto.User;
+import com.springmeal.backend.dto.user.UserDTO;
+import com.springmeal.backend.security.service.UserDetailsImpl;
 import com.springmeal.backend.service.UserServiceImpl;
+
+import jakarta.servlet.http.HttpServletRequest;
 
 /**
  * @author joan
@@ -28,7 +36,9 @@ import com.springmeal.backend.service.UserServiceImpl;
 public class UserController {
 
 	@Autowired
-	UserServiceImpl userServiceImpl;
+	private UserServiceImpl userServiceImpl;
+	@Autowired
+	private IUserDAO userDAO;
 
 	@GetMapping("/users")
 	@PreAuthorize("hasRole('admin')")
@@ -43,11 +53,15 @@ public class UserController {
 	}
 
 	@GetMapping("/users/{codigo}")
-	@PreAuthorize("hasRole('admin')")
-	public User userById(@PathVariable(name = "codigo") int codigo) {
-		User user = new User();
-		user = userServiceImpl.userById(codigo);
-		return user;
+	public User userById(@PathVariable(name = "codigo") int codigo) {	
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		User userReal = this.userDAO.findByUsername(((UserDetailsImpl)authentication.getPrincipal()).getUsername());
+		
+		if(userReal.getId() != codigo) {
+			throw new RuntimeException("No tienes permisos para ver este id");
+		}
+			
+		return userServiceImpl.userById(codigo);
 	}
 
 	@PutMapping("/users/{codigo}")

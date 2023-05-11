@@ -16,9 +16,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.springmeal.backend.dto.Category;
 import com.springmeal.backend.dto.DishAllergens;
-import com.springmeal.backend.service.CategoryServiceImpl;
 import com.springmeal.backend.service.DishAllergensServiceImpl;
 
 /**
