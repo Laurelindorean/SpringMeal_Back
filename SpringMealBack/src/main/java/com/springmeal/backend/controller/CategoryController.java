@@ -31,14 +31,14 @@ public class CategoryController {
 	CategoryServiceImpl categoryServiceImpl;
 
 	@GetMapping("/categories")
-	public List<Category> listarCategory() {
-		return categoryServiceImpl.listarCategory();
+	public List<Category> listCategory() {
+		return categoryServiceImpl.listCategory();
 	}
 
 	@PostMapping("/categories")
 	@PreAuthorize("hasRole('admin')")
-	public Category guardarCategory(@RequestBody Category category) {
-		return categoryServiceImpl.guardarCategory(category);
+	public Category saveCategory(@RequestBody Category category) {
+		return categoryServiceImpl.saveCategory(category);
 	}
 
 	@GetMapping("/categories/{id}")
@@ -50,7 +50,7 @@ public class CategoryController {
 
 	@PutMapping("/categories/{id}")
 	@PreAuthorize("hasRole('admin')")
-	public Category actualizarCategory(@PathVariable(name = "id") int id, @RequestBody Category category) {
+	public Category updateCategory(@PathVariable(name = "id") int id, @RequestBody Category category) {
 
 		Category category_seleccionado = new Category();
 		Category category_actualizado = new Category();
@@ -58,15 +58,15 @@ public class CategoryController {
 		category_seleccionado.setId(id);
 		category_seleccionado.setName(category.getName());
 
-		category_actualizado = categoryServiceImpl.actualizarCategory(category_seleccionado);
+		category_actualizado = categoryServiceImpl.updateCategory(category_seleccionado);
 
 		return category_actualizado;
 	}
 
 	@DeleteMapping("/categories/{id}")
 	@PreAuthorize("hasRole('admin')")
-	public void eliminarCategory(@PathVariable(name = "id") int id) {
-		categoryServiceImpl.eliminarCategory(id);
+	public void deleteCategory(@PathVariable(name = "id") int id) {
+		categoryServiceImpl.deleteCategory(id);
 	}
 
 }

@@ -13,15 +13,15 @@ import com.springmeal.backend.dto.Role;
  */
 public interface IRoleService {
 	// Metodos del CRUD
-	public List<Role> listarRoles(); // Listar All
+	public List<Role> listRoles(); 
 
-	public Role guardarRole(Role role); // Guarda un departamento CREATE
+	public Role saveRole(Role role); 
 
-	public Role findById(int codigo); // Leer datos de un departamento READ
+	public Role findById(int codigo); 
 
-	public Role actualizarRole(Role role); // Actualiza datos del departamento UPDATE
+	public Role updateRole(Role role); 
 
-	public void eliminarRole(int codigo);// Elimina el departamento DELETE
+	public void deleteRole(int codigo);
 	
 	public Role findByRole(String role);
 

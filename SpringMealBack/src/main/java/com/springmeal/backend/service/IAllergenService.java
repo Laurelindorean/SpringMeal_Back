@@ -13,13 +13,13 @@ import com.springmeal.backend.dto.Allergen;
  */
 public interface IAllergenService {
 	// Metodos del CRUD
-	public List<Allergen> listarAllergens(); // Listar All
+	public List<Allergen> listAllergens(); // Listar All
 
-	public Allergen guardarAllergen(Allergen allergen); // Guarda un departamento CREATE
+	public Allergen saveAllergen(Allergen allergen); // Guarda un departamento CREATE
 
 	public Allergen findById(int codigo); // Leer datos de un departamento READ
 
-	public Allergen actualizarAllergen(Allergen allergen); // Actualiza datos del departamento UPDATE
+	public Allergen updateAllergen(Allergen allergen); // Actualiza datos del departamento UPDATE
 
-	public void eliminarAllergen(int codigo);// Elimina el departamento DELETE
+	public void deleteAllergen(int codigo);// Elimina el departamento DELETE
 }

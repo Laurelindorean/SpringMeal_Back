@@ -32,13 +32,13 @@ public class AllergenController {
 
 	@GetMapping("/allergens")
 	public List<Allergen> listarAllergens() {
-		return allergenServiceImpl.listarAllergens();
+		return allergenServiceImpl.listAllergens();
 	}
 
 	@PostMapping("/allergens")
 	@PreAuthorize("hasRole('admin')")
 	public Allergen guardarAllergen(@RequestBody Allergen allergen) {
-		return allergenServiceImpl.guardarAllergen(allergen);
+		return allergenServiceImpl.saveAllergen(allergen);
 	}
 
 	@GetMapping("/allergens/{codigo}")
@@ -57,7 +57,7 @@ public class AllergenController {
 		allergen_seleccionado = allergenServiceImpl.findById(codigo);
 		allergen_seleccionado.setName(allergen.getName());
 
-		allergen_actualizado = allergenServiceImpl.actualizarAllergen(allergen_seleccionado);
+		allergen_actualizado = allergenServiceImpl.updateAllergen(allergen_seleccionado);
 
 		return allergen_actualizado;
 	}
@@ -65,7 +65,7 @@ public class AllergenController {
 	@DeleteMapping("/allergens/{codigo}")
 	@PreAuthorize("hasRole('admin')")
 	public void eliminarAllergen(@PathVariable(name = "codigo") int codigo) {
-		allergenServiceImpl.eliminarAllergen(codigo);
+		allergenServiceImpl.deleteAllergen(codigo);
 	}
 
 }

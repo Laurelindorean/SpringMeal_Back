@@ -75,6 +75,7 @@ public class OrderDishController {
 			out.add(item.getDish());
 		}
 		return out;
+		
 		/*List<OrderDish> in = orderDishServiceImpl.findByOrder(order);
 		List<Dish> out = new ArrayList<Dish>();
 		for (OrderDish item : in) {
@@ -84,12 +85,5 @@ public class OrderDishController {
 		
 	}
 
-	/*public static void main(String[] args) {
-		List<OrderDish> in = new ArrayList<OrderDish>();
-		List<Dish> out = new ArrayList<Dish>();
-		for (OrderDish item : in) {
-			out.add(item.getDish());
-		}
-	}*/
 
 }

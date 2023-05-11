@@ -21,7 +21,7 @@ import jakarta.persistence.Table;
 @Entity
 @Table(name = "dishallergens")
 public class DishAllergens {
-	// Atributos de entidad departamento
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
@@ -35,7 +35,6 @@ public class DishAllergens {
 	private Allergen allergens;
 
 
-	// CONSTRUCTORES
 	public DishAllergens() {
 
 	}
@@ -68,9 +67,6 @@ public class DishAllergens {
 	public void setAllergens(Allergen allergens) {
 		this.allergens = allergens;
 	}
-
-	
-
 
 	
 

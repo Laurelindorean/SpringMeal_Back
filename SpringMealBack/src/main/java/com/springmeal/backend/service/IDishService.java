@@ -5,7 +5,8 @@ package com.springmeal.backend.service;
 
 import java.util.List;
 
-import com.springmeal.backend.dto.Category;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import com.springmeal.backend.dto.Dish;
 
 /**
@@ -14,19 +15,21 @@ import com.springmeal.backend.dto.Dish;
  */
 public interface IDishService {
 	// Metodos del CRUD
-	public List<Dish> listarDish();
+	public List<Dish> listDish();
 
-	public Dish guardarDish(Dish dish);
+	public Dish saveDish(Dish dish);
 
 	public Dish findById(int id);
 
-	public Dish actualizarDish(Dish dish);
+	public Dish updateDish(Dish dish);
 
-	public void eliminarDish(int id);
+	public void deleteDish(int id);
 
 	public List<Dish> findByName(String name);
 	
 	public List<Dish> findByPartialName(String partial_name);
 	
-	public List<Dish> findByCategory(Category category);
+	public Page<Dish> findByCategory(String category, Pageable pageable);
+	
+	public Page<Dish> listDishOrdered(Pageable pageable);
 }

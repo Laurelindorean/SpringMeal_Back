@@ -13,13 +13,13 @@ import com.springmeal.backend.dto.DishAllergens;
  */
 public interface IDishAllergensService {
 	// Metodos del CRUD
-	public List<DishAllergens> listarDishAllergens();
+	public List<DishAllergens> listDishAllergens();
 
-	public DishAllergens guardarDishAllergens(DishAllergens dishAllergens);
+	public DishAllergens saveDishAllergens(DishAllergens dishAllergens);
 
 	public DishAllergens findById(int id);
 
-	public DishAllergens actualizarDishAllergens(DishAllergens dishAllergens);
+	public DishAllergens updateDishAllergens(DishAllergens dishAllergens);
 
-	public void eliminarDishAllergens(int id);
+	public void deleteDishAllergens(int id);
 }

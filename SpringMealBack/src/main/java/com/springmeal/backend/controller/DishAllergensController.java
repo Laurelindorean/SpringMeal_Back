@@ -31,14 +31,14 @@ public class DishAllergensController {
 	DishAllergensServiceImpl dishAllergensServiceImpl;
 
 	@GetMapping("/dishallergens")
-	public List<DishAllergens> listarDishAllergens() {
-		return dishAllergensServiceImpl.listarDishAllergens();
+	public List<DishAllergens> listDishAllergens() {
+		return dishAllergensServiceImpl.listDishAllergens();
 	}
 
 	@PostMapping("/dishallergens")
 	@PreAuthorize("hasRole('admin')")
-	public DishAllergens guardarDishAllergens(@RequestBody DishAllergens dishAllergens) {
-		return dishAllergensServiceImpl.guardarDishAllergens(dishAllergens);
+	public DishAllergens saveDishAllergens(@RequestBody DishAllergens dishAllergens) {
+		return dishAllergensServiceImpl.saveDishAllergens(dishAllergens);
 	}
 
 	@GetMapping("/dishallergens/{id}")
@@ -50,7 +50,7 @@ public class DishAllergensController {
 
 	@PutMapping("/dishallergens/{id}")
 	@PreAuthorize("hasRole('admin')")
-	public DishAllergens actualizarDishAllergens(@PathVariable(name = "id") int id,
+	public DishAllergens updateDishAllergens(@PathVariable(name = "id") int id,
 			@RequestBody DishAllergens dishAllergens) {
 		DishAllergens dishAllergenSelected = new DishAllergens();
 		DishAllergens dishAllergensUpdated = new DishAllergens();
@@ -58,17 +58,14 @@ public class DishAllergensController {
 		dishAllergenSelected.setId(id);
 		dishAllergenSelected.setAllergens(dishAllergens.getAllergens());
 		dishAllergenSelected.setDish(dishAllergens.getDish());
-
-
-		dishAllergensUpdated = dishAllergensServiceImpl.actualizarDishAllergens(dishAllergenSelected);
-
+		dishAllergensUpdated = dishAllergensServiceImpl.updateDishAllergens(dishAllergenSelected);
 		return dishAllergensUpdated;
 	}
 
 	@DeleteMapping("/dishallergens/{id}")
 	@PreAuthorize("hasRole('admin')")
-	public void eliminarDishAllergens(@PathVariable(name = "id") int id) {
-		dishAllergensServiceImpl.eliminarDishAllergens(id);
+	public void deleteDishAllergens(@PathVariable(name = "id") int id) {
+		dishAllergensServiceImpl.deleteDishAllergens(id);
 	}
 
 }

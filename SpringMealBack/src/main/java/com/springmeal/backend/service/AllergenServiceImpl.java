@@ -22,12 +22,12 @@ public class AllergenServiceImpl implements IAllergenService {
 	IAllergenDAO iAllergenDAO;
 
 	@Override
-	public List<Allergen> listarAllergens() {
+	public List<Allergen> listAllergens() {
 		return iAllergenDAO.findAll();
 	}
 
 	@Override
-	public Allergen guardarAllergen(Allergen allergen) {
+	public Allergen saveAllergen(Allergen allergen) {
 		return iAllergenDAO.save(allergen);
 	}
 
@@ -37,12 +37,12 @@ public class AllergenServiceImpl implements IAllergenService {
 	}
 
 	@Override
-	public Allergen actualizarAllergen(Allergen allergen) {
+	public Allergen updateAllergen(Allergen allergen) {
 		return iAllergenDAO.save(allergen);
 	}
 
 	@Override
-	public void eliminarAllergen(int codigo) {
+	public void deleteAllergen(int codigo) {
 		iAllergenDAO.deleteById(codigo);
 
 	}

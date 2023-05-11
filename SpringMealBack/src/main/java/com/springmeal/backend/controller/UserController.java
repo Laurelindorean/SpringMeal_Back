@@ -6,10 +6,7 @@ package com.springmeal.backend.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpRequest;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -18,15 +15,10 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
-import com.springmeal.backend.dao.IUserDAO;
 import com.springmeal.backend.dto.User;
-import com.springmeal.backend.dto.user.UserDTO;
-import com.springmeal.backend.security.service.UserDetailsImpl;
 import com.springmeal.backend.service.UserServiceImpl;
 import com.springmeal.backend.util.SpringMealUtils;
 
-import jakarta.servlet.http.HttpServletRequest;
 
 /**
  * @author joan
@@ -41,46 +33,49 @@ public class UserController {
 
 	@GetMapping("/users")
 	@PreAuthorize("hasRole('admin')")
-	public List<User> listarUsers() {
-		return userServiceImpl.listarUsers();
+	public List<User> listUser() {
+		return userServiceImpl.listUsers();
 	}
 
 	@PostMapping("/users")
 	@PreAuthorize("hasRole('admin')")
-	public User guardarUser(@RequestBody User user) {
-		return userServiceImpl.guardarUser(user);
+	public User saveUser(@RequestBody User user) {
+		return userServiceImpl.saveUser(user);
 	}
 
-	@GetMapping("/users/{codigo}")
-	public User findById(@PathVariable(name = "codigo") int codigo) {
-		if (SpringMealUtils.getUserDetails().getId() != codigo) {
-			throw new RuntimeException("No tienes permisos para ver este id");
+	@GetMapping("/users/{id}")
+	public User findById(@PathVariable(name = "id") int id) {
+		//this endpoint won't work unless the idUser = codigo
+		if (SpringMealUtils.getUserDetails().getId() != id) {
+			throw new RuntimeException("You're not allowed to see this User");
 		}
 
-		return userServiceImpl.findById(codigo);
+		return userServiceImpl.findById(id);
 	}
 
-	@PutMapping("/users/{codigo}")
-	public User actualizarUser(@PathVariable(name = "codigo") int codigo, @RequestBody User user) {
+	@PutMapping("/users/{id}")
+	public User updateUser(@PathVariable(name = "id") int id, @RequestBody User user) {
+		
+		if (SpringMealUtils.getUserDetails().getId() != id) {
+			throw new RuntimeException("You're not allowed to update this User");
+		}
+		User user_selected = new User();
+		User user_updated = new User();
+		user_selected = userServiceImpl.findById(id);
+		user_selected.setDni(user.getDni());
+		user_selected.setEmail(user.getEmail());
+		user_selected.setName(user.getName());
+		user_selected.setPassword(user.getPassword());
+		user_selected.setSurname(user.getSurname());
 
-		User user_seleccionado = new User();
-		User user_actualizado = new User();
-		user_seleccionado = userServiceImpl.findById(codigo);
-		user_seleccionado.setDni(user.getDni());
-		user_seleccionado.setEmail(user.getEmail());
-		user_seleccionado.setName(user.getName());
-		user_seleccionado.setPassword(user.getPassword());
-		user_seleccionado.setSurname(user.getSurname());
-
-		user_actualizado = userServiceImpl.actualizarUser(user_seleccionado);
-
-		return user_actualizado;
+		user_updated = userServiceImpl.updateUser(user_selected);
+		return user_updated;
 	}
 
-	@DeleteMapping("/users/{codigo}")
+	@DeleteMapping("/users/{id}")
 	@PreAuthorize("hasRole('admin')")
-	public void eliminarUser(@PathVariable(name = "codigo") int codigo) {
-		userServiceImpl.eliminarUser(codigo);
+	public void deleteUser(@PathVariable(name = "id") int id) {
+		userServiceImpl.deleteUser(id);
 	}
 
 }

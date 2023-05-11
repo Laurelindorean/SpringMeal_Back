@@ -25,12 +25,12 @@ public class RoleServiceImpl implements IRoleService {
 	IUserService userService;
 
 	@Override
-	public List<Role> listarRoles() {
+	public List<Role> listRoles() {
 		return iRoleDAO.findAll();
 	}
 
 	@Override
-	public Role guardarRole(Role role) {
+	public Role saveRole(Role role) {
 		return iRoleDAO.save(role);
 	}
 
@@ -40,12 +40,12 @@ public class RoleServiceImpl implements IRoleService {
 	}
 
 	@Override
-	public Role actualizarRole(Role role) {
+	public Role updateRole(Role role) {
 		return iRoleDAO.save(role);
 	}
 
 	@Override
-	public void eliminarRole(int codigo) {
+	public void deleteRole(int codigo) {
 		iRoleDAO.deleteById(codigo);
 
 	}
@@ -60,7 +60,7 @@ public class RoleServiceImpl implements IRoleService {
 
 		User userEntity = this.userService.findById(idUser);
 		userEntity.setRole(this.iRoleDAO.findByName("ROLE_admin").get());
-		this.userService.actualizarUser(userEntity);
+		this.userService.updateUser(userEntity);
 	}
 
 }

@@ -22,12 +22,12 @@ public class DishAllergensServiceImpl implements IDishAllergensService {
 	IDishAllergensDAO iDishAllergensDAO;
 
 	@Override
-	public List<DishAllergens> listarDishAllergens() {
+	public List<DishAllergens> listDishAllergens() {
 		return iDishAllergensDAO.findAll();
 	}
 
 	@Override
-	public DishAllergens guardarDishAllergens(DishAllergens dishAllergens) {
+	public DishAllergens saveDishAllergens(DishAllergens dishAllergens) {
 		return iDishAllergensDAO.save(dishAllergens);
 	}
 
@@ -37,12 +37,12 @@ public class DishAllergensServiceImpl implements IDishAllergensService {
 	}
 
 	@Override
-	public DishAllergens actualizarDishAllergens(DishAllergens dishAllergens) {
+	public DishAllergens updateDishAllergens(DishAllergens dishAllergens) {
 		return iDishAllergensDAO.save(dishAllergens);
 	}
 
 	@Override
-	public void eliminarDishAllergens(int id) {
+	public void deleteDishAllergens(int id) {
 		iDishAllergensDAO.deleteById(id);
 
 	}

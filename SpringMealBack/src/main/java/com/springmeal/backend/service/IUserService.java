@@ -13,13 +13,13 @@ import com.springmeal.backend.dto.User;
  */
 public interface IUserService {
 	// Metodos del CRUD
-	public List<User> listarUsers(); // Listar All
+	public List<User> listUsers(); 
 
-	public User guardarUser(User user); // Guarda un departamento CREATE
+	public User saveUser(User user); 
 
-	public User findById(int codigo); // Leer datos de un departamento READ
+	public User findById(int codigo); 
 
-	public User actualizarUser(User user); // Actualiza datos del departamento UPDATE
+	public User updateUser(User user); 
 
-	public void eliminarUser(int codigo);// Elimina el departamento DELETE
+	public void deleteUser(int codigo);
 }

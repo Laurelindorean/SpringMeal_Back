@@ -6,10 +6,10 @@ package com.springmeal.backend.service;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-
 import com.springmeal.backend.dao.IDishDAO;
-import com.springmeal.backend.dto.Category;
 import com.springmeal.backend.dto.Dish;
 
 /**
@@ -23,12 +23,12 @@ public class DishServiceImpl implements IDishService {
 	IDishDAO iDishDAO;
 
 	@Override
-	public List<Dish> listarDish() {
+	public List<Dish> listDish() {
 		return iDishDAO.findAll();
 	}
 
 	@Override
-	public Dish guardarDish(Dish dish) {
+	public Dish saveDish(Dish dish) {
 		return iDishDAO.save(dish);
 	}
 
@@ -38,12 +38,12 @@ public class DishServiceImpl implements IDishService {
 	}
 
 	@Override
-	public Dish actualizarDish(Dish dish) {
+	public Dish updateDish(Dish dish) {
 		return iDishDAO.save(dish);
 	}
 
 	@Override
-	public void eliminarDish(int id) {
+	public void deleteDish(int id) {
 		iDishDAO.deleteById(id);
 	}
 	
@@ -58,8 +58,17 @@ public class DishServiceImpl implements IDishService {
 	}
 	
 	@Override
-	public List<Dish> findByCategory(Category category) {
-		return iDishDAO.findByCategory(category);
+	public Page<Dish>  findByCategory(String category, Pageable pageable) {
+		return iDishDAO.findByCategoryName(category, pageable);
 	}
+
+	@Override
+	public Page<Dish> listDishOrdered(Pageable pageable) {
+		return iDishDAO.findAll(pageable);
+	}
+
+
+	
+	
 
 }

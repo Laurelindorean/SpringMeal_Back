@@ -25,20 +25,20 @@ import com.springmeal.backend.service.IRoleService;
  */
 @RestController
 @RequestMapping("/api")
-@PreAuthorize("hasRole('admin')")
+@PreAuthorize("hasRole('admin')")//Only an Admin Role will be able to use these endpoints
 public class RoleController {
 
 	@Autowired
 	IRoleService roleServiceImpl;
 
 	@GetMapping("/roles")
-	public List<Role> listarRoles() {
-		return roleServiceImpl.listarRoles();
+	public List<Role> listRoles() {
+		return roleServiceImpl.listRoles();
 	}
 
 	@PostMapping("/roles")
-	public Role guardarRole(@RequestBody Role role) {
-		return roleServiceImpl.guardarRole(role);
+	public Role saveRole(@RequestBody Role role) {
+		return roleServiceImpl.saveRole(role);
 	}
 
 	@GetMapping("/roles/{codigo}")
@@ -49,21 +49,21 @@ public class RoleController {
 	}
 
 	@PutMapping("/roles/{codigo}")
-	public Role actualizarRole(@PathVariable(name = "codigo") int codigo, @RequestBody Role role) {
+	public Role updateRole(@PathVariable(name = "codigo") int codigo, @RequestBody Role role) {
 
 		Role role_seleccionado = new Role();
 		Role role_actualizado = new Role();
 		role_seleccionado = roleServiceImpl.findById(codigo);
 		role_seleccionado.setName(role.getName());
 
-		role_actualizado = roleServiceImpl.actualizarRole(role_seleccionado);
+		role_actualizado = roleServiceImpl.updateRole(role_seleccionado);
 
 		return role_actualizado;
 	}
 
 	@DeleteMapping("/roles/{codigo}")
-	public void eliminarRole(@PathVariable(name = "codigo") int codigo) {
-		roleServiceImpl.eliminarRole(codigo);
+	public void deleteRole(@PathVariable(name = "codigo") int codigo) {
+		roleServiceImpl.deleteRole(codigo);
 	}
 	
 	//EndPoint to change the role of a user
