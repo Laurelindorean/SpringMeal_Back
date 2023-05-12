@@ -10,9 +10,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.springmeal.backend.dao.IOrderDAO;
+import com.springmeal.backend.dao.IUserDAO;
 import com.springmeal.backend.dto.Order;
 import com.springmeal.backend.dto.Slot;
 import com.springmeal.backend.dto.User;
+import com.springmeal.backend.util.SpringMealUtils;
 
 /**
  * @author Palmira
@@ -23,7 +25,9 @@ public class OrderServiceImpl implements IOrderService {
 
 	@Autowired
 	IOrderDAO iOrderDAO;
-
+	@Autowired
+	IUserDAO userDAO;
+	
 	@Override
 	public List<Order> listOrder() {
 		return iOrderDAO.findAll();
@@ -31,6 +35,7 @@ public class OrderServiceImpl implements IOrderService {
 
 	@Override
 	public Order saveOrder(Order order) {
+		order.setUser(userDAO.findByUsername(SpringMealUtils.getUserDetails().getUsername()));
 		return iOrderDAO.save(order);
 	}
 
@@ -50,8 +55,8 @@ public class OrderServiceImpl implements IOrderService {
 	}
 
 	@Override
-	public List<Order> findByUser(User user) {
-		return iOrderDAO.findByUser(user);
+	public List<Order> findByUserUsername(String username) {
+		return iOrderDAO.findByUserUsername(username);
 	}
 	
 	@Override

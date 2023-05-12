@@ -13,7 +13,7 @@ import org.springframework.data.jpa.repository.Query;
 import com.springmeal.backend.dto.Dish;
 
 /**
- * @author aitor, joan
+ * @author aitor, joan, palmira
  *
  */
 public interface IDishDAO extends JpaRepository<Dish, Integer> {

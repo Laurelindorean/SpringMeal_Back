@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -40,8 +41,8 @@ public class OrderDishController {
 	}
 
 	@PostMapping("/orderdish")
-	public OrderDish saveOrderDish(@RequestBody OrderDish orderDish) {
-		return orderDishServiceImpl.saveOrderDish(orderDish);
+	public ResponseEntity<OrderDish> saveOrderDish(@RequestBody OrderDish orderDish) {
+		return ResponseEntity.ok(orderDishServiceImpl.saveOrderDish(orderDish));
 	}
 
 	@GetMapping("/orderdish/{id}")
@@ -63,11 +64,13 @@ public class OrderDishController {
 
 	@DeleteMapping("/orderdish/{id}")
 	@PreAuthorize("hasRole('admin')")
-	public void deleteOrderDish(@PathVariable(name = "id") int id) {
+	public ResponseEntity<String> deleteOrderDish(@PathVariable(name = "id") int id) {
 		orderDishServiceImpl.deleteOrderDish(id);
+		return ResponseEntity.ok("Deleted");
 	}
 
 	@GetMapping("/orderdish/order")
+	@PreAuthorize("hasRole('admin')")
 	public List<Dish> findByOrder(@RequestBody Order order) {
 		List<OrderDish> in = orderDishServiceImpl.findByOrder(order);
 		List<Dish> out = new ArrayList<Dish>();
@@ -75,15 +78,13 @@ public class OrderDishController {
 			out.add(item.getDish());
 		}
 		return out;
-		
-		/*List<OrderDish> in = orderDishServiceImpl.findByOrder(order);
-		List<Dish> out = new ArrayList<Dish>();
-		for (OrderDish item : in) {
-			out.add(item.getDish());
-		}
-		return out;*/
-		
-	}
 
+		/*
+		 * List<OrderDish> in = orderDishServiceImpl.findByOrder(order); List<Dish> out
+		 * = new ArrayList<Dish>(); for (OrderDish item : in) { out.add(item.getDish());
+		 * } return out;
+		 */
+
+	}
 
 }

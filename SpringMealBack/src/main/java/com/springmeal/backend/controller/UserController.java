@@ -4,8 +4,8 @@
 package com.springmeal.backend.controller;
 
 import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,9 +19,8 @@ import com.springmeal.backend.dto.User;
 import com.springmeal.backend.service.UserServiceImpl;
 import com.springmeal.backend.util.SpringMealUtils;
 
-
 /**
- * @author joan
+ * @author joan, Palmira, Aitor
  *
  */
 @RestController
@@ -39,26 +38,51 @@ public class UserController {
 
 	@PostMapping("/users")
 	@PreAuthorize("hasRole('admin')")
-	public User saveUser(@RequestBody User user) {
-		return userServiceImpl.saveUser(user);
+	public ResponseEntity<User> saveUser(@RequestBody User user) {
+		return ResponseEntity.ok(userServiceImpl.saveUser(user));
 	}
 
 	@GetMapping("/users/{id}")
 	public User findById(@PathVariable(name = "id") int id) {
-		//this endpoint won't work unless the idUser = codigo
+		// this endpoint won't work unless the idUser = codigo
 		if (SpringMealUtils.getUserDetails().getId() != id) {
 			throw new RuntimeException("You're not allowed to see this User");
 		}
+		return userServiceImpl.findById(id);
+	}
 
+	// This endpoint will return any user by id and it will be only accesible by
+	// admins
+	@GetMapping("/users/admin/{id}")
+	@PreAuthorize("hasRole('admin')")
+	public User findUsersById(@PathVariable(name = "id") int id) {
 		return userServiceImpl.findById(id);
 	}
 
 	@PutMapping("/users/{id}")
 	public User updateUser(@PathVariable(name = "id") int id, @RequestBody User user) {
-		
+
 		if (SpringMealUtils.getUserDetails().getId() != id) {
 			throw new RuntimeException("You're not allowed to update this User");
 		}
+		
+		User user_selected = new User();
+		User user_updated = new User();
+		user_selected = userServiceImpl.findById(id);
+		user_selected.setDni(user.getDni());
+		user_selected.setEmail(user.getEmail());
+		user_selected.setName(user.getName());
+		user_selected.setPassword(user.getPassword());
+		user_selected.setSurname(user.getSurname());
+
+		user_updated = userServiceImpl.updateUser(user_selected);
+		return user_updated;
+	}
+
+	@PutMapping("/users/update/{id}")
+	@PreAuthorize("hasRole('admin')")
+	public User updateUserByAdmin(@PathVariable(name = "id") int id, @RequestBody User user) {
+
 		User user_selected = new User();
 		User user_updated = new User();
 		user_selected = userServiceImpl.findById(id);
@@ -74,8 +98,9 @@ public class UserController {
 
 	@DeleteMapping("/users/{id}")
 	@PreAuthorize("hasRole('admin')")
-	public void deleteUser(@PathVariable(name = "id") int id) {
+	public ResponseEntity<String> deleteUser(@PathVariable(name = "id") int id) {
 		userServiceImpl.deleteUser(id);
+		return ResponseEntity.ok("User deleted");
 	}
 
 }

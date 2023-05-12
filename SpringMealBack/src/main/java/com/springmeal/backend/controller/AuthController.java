@@ -76,6 +76,6 @@ public class AuthController {
 		user.setEmail(signUpRequest.getEmail());
 		user.setDni(signUpRequest.getDni());
 		this.userDAO.save(user);
-		return ResponseEntity.ok(null);
+		return ResponseEntity.ok("User created!");
 	}
 }

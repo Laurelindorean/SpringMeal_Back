@@ -10,6 +10,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort.Direction;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -41,8 +42,8 @@ public class DishController {
 
 	@PostMapping("/dishes")
 	@PreAuthorize("hasRole('admin')")
-	public Dish saveDish(@RequestBody Dish dish) {
-		return dishServiceImpl.saveDish(dish);
+	public ResponseEntity<Dish> saveDish(@RequestBody Dish dish) {
+		return ResponseEntity.ok(dishServiceImpl.saveDish(dish));
 	}
 
 	@GetMapping("/dishes/{id}")
@@ -51,15 +52,17 @@ public class DishController {
 		dish = dishServiceImpl.findById(id);
 		return dish;
 	}
-	//To sort all the dishes by name
+
+	// To sort all the dishes by name
 	@GetMapping("/dishes/sortByName")
-	public Page<Dish> listDishSorted(){
+	public Page<Dish> listDishSorted() {
 		Pageable pageable = PageRequest.of(0, 100, Direction.ASC, "name");
 		return this.dishServiceImpl.listDishOrdered(pageable);
 	}
-	//To sort all the dishes by price
+
+	// To sort all the dishes by price
 	@GetMapping("/dishes/sortByPrice")
-	public Page<Dish> listDishSortedByPrice(){
+	public Page<Dish> listDishSortedByPrice() {
 		Pageable pageable = PageRequest.of(0, 100, Direction.ASC, "price");
 		return this.dishServiceImpl.listDishOrdered(pageable);
 	}
@@ -77,7 +80,8 @@ public class DishController {
 
 	@GetMapping("/dishes/category/{category}")
 	public Page<Dish> findByCategory(@PathVariable String category) {
-		//this allows us to sort the dishes by name ascendent with ASC or descendent with DESC
+		// this allows us to sort the dishes by name ascendent with ASC or descendent
+		// with DESC
 		Pageable pageable = PageRequest.of(0, 100, Direction.ASC, "name");
 		return dishServiceImpl.findByCategory(category, pageable);
 	}
@@ -102,8 +106,9 @@ public class DishController {
 
 	@DeleteMapping("/dishes/{id}")
 	@PreAuthorize("hasRole('admin')")
-	public void deleteDish(@PathVariable(name = "id") int id) {
+	public ResponseEntity<String> deleteDish(@PathVariable(name = "id") int id) {
 		dishServiceImpl.deleteDish(id);
+		return ResponseEntity.ok("Deleted");
 	}
 
 }

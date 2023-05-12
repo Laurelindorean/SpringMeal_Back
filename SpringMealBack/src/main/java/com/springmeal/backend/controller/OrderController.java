@@ -7,6 +7,7 @@ import java.sql.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -21,6 +22,7 @@ import com.springmeal.backend.dto.Order;
 import com.springmeal.backend.dto.Slot;
 import com.springmeal.backend.dto.User;
 import com.springmeal.backend.service.OrderServiceImpl;
+import com.springmeal.backend.util.SpringMealUtils;
 
 /**
  * @author Palmira
@@ -40,11 +42,12 @@ public class OrderController {
 	}
 
 	@PostMapping("/orders")
-	public Order saveOrder(@RequestBody Order order) {
-		return orderServiceImpl.saveOrder(order);
+	public ResponseEntity<Order> saveOrder(@RequestBody Order order) {
+		return ResponseEntity.ok(orderServiceImpl.saveOrder(order));
 	}
 
 	@GetMapping("/orders/{id}")
+	@PreAuthorize("hasRole('admin')")
 	public Order findById(@PathVariable(name = "id") int id) {
 		Order order_id = new Order();
 		order_id = orderServiceImpl.findById(id);
@@ -64,37 +67,44 @@ public class OrderController {
 
 	@DeleteMapping("/orders/{id}")
 	@PreAuthorize("hasRole('admin')")
-	public void deleteOrder(@PathVariable(name = "id") int id) {
+	public ResponseEntity<String> deleteOrder(@PathVariable(name = "id") int id) {
 		orderServiceImpl.deleteOrder(id);
+		return ResponseEntity.ok("Deleted");
 	}
-
+	//It only will return the info it the username that matches
 	@GetMapping("/orders/user")
-	public List<Order> findByUser(@RequestBody User user) {
-		return orderServiceImpl.findByUser(user);
+	public List<Order> findByUserUsername() {
+		return orderServiceImpl.findByUserUsername(SpringMealUtils.getUserDetails().getUsername());
 	}
 	
 	@GetMapping("/orders/date/{date}")
+	@PreAuthorize("hasRole('admin')")
 	public List<Order> findByDate(@PathVariable("date") Date date) {
 		return orderServiceImpl.findByDate(date, "=");
 	}
+
 	@GetMapping("/orders/future")
+	@PreAuthorize("hasRole('admin')")
 	public List<Order> findByDate() {
 		Date date = new Date(System.currentTimeMillis());
 		return orderServiceImpl.findByDate(date, ">=");
 	}
 
 	@GetMapping("/orders/user/date/{date}")
+	@PreAuthorize("hasRole('admin')")
 	public List<Order> findByUserDate(@RequestBody User user, @PathVariable("date") Date date) {
 		return orderServiceImpl.findByUserDate(user, date, "=");
 	}
 
 	@GetMapping("/orders/user/future")
+	@PreAuthorize("hasRole('admin')")
 	public List<Order> findByUserDate(@RequestBody User user) {
 		Date date = new Date(System.currentTimeMillis());
 		return orderServiceImpl.findByUserDate(user, date, ">=");
 	}
 
 	@GetMapping("/orders/slot/date/{date}")
+	@PreAuthorize("hasRole('admin')")
 	public List<Order> findBySlotDate(@RequestBody Slot slot, @PathVariable("date") Date date) {
 		return orderServiceImpl.findBySlotDate(slot, date);
 	}

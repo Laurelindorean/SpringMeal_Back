@@ -8,18 +8,20 @@ import java.util.List;
 import com.springmeal.backend.dto.Allergen;
 
 /**
- * @author Joan
+ * @author Joan, Palmira
  *
  */
 public interface IAllergenService {
 	// Metodos del CRUD
-	public List<Allergen> listAllergens(); // Listar All
+	public List<Allergen> listAllergens(); 
 
-	public Allergen saveAllergen(Allergen allergen); // Guarda un departamento CREATE
+	public Allergen saveAllergen(Allergen allergen); 
+	
+	public Allergen findByPartialName(String name);
 
-	public Allergen findById(int codigo); // Leer datos de un departamento READ
+	public Allergen findById(int id); 
 
-	public Allergen updateAllergen(Allergen allergen); // Actualiza datos del departamento UPDATE
+	public Allergen updateAllergen(Allergen allergen);
 
-	public void deleteAllergen(int codigo);// Elimina el departamento DELETE
+	public void deleteAllergen(int id);
 }

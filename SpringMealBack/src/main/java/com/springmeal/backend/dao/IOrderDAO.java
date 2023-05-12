@@ -9,10 +9,7 @@ import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
-
 import com.springmeal.backend.dto.Order;
-import com.springmeal.backend.dto.User;
-import com.springmeal.backend.dto.Slot;
 
 /**
  * @author Palmira, Joan
@@ -20,7 +17,7 @@ import com.springmeal.backend.dto.Slot;
  */
 public interface IOrderDAO extends JpaRepository<Order, Integer>{
 	
-	List<Order> findByUser(User user);
+	List<Order> findByUserUsername(String username);
 
 	final String DATE_SUBQUERY = "IF(:cmp = '=', date = :date, date >= :date)";
 	

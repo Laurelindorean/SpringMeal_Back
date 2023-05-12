@@ -1,6 +1,8 @@
 package com.springmeal.backend.dto;
 
 
+
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 
@@ -101,6 +103,7 @@ public class User {
 
 	public void setUsername(String username) {
 		this.username = username;
+		
 	}
 	
 

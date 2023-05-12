@@ -6,6 +6,7 @@ package com.springmeal.backend.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -34,11 +35,12 @@ public class DishAllergensController {
 	public List<DishAllergens> listDishAllergens() {
 		return dishAllergensServiceImpl.listDishAllergens();
 	}
+	//TODO It will be usefull to create an endpoint that returns a list of dishes by allergens
 
 	@PostMapping("/dishallergens")
 	@PreAuthorize("hasRole('admin')")
-	public DishAllergens saveDishAllergens(@RequestBody DishAllergens dishAllergens) {
-		return dishAllergensServiceImpl.saveDishAllergens(dishAllergens);
+	public ResponseEntity<DishAllergens> saveDishAllergens(@RequestBody DishAllergens dishAllergens) {
+		return ResponseEntity.ok(dishAllergensServiceImpl.saveDishAllergens(dishAllergens));
 	}
 
 	@GetMapping("/dishallergens/{id}")
@@ -64,8 +66,9 @@ public class DishAllergensController {
 
 	@DeleteMapping("/dishallergens/{id}")
 	@PreAuthorize("hasRole('admin')")
-	public void deleteDishAllergens(@PathVariable(name = "id") int id) {
+	public ResponseEntity<String> deleteDishAllergens(@PathVariable(name = "id") int id) {
 		dishAllergensServiceImpl.deleteDishAllergens(id);
+		return ResponseEntity.ok("Deleted");
 	}
 
 }

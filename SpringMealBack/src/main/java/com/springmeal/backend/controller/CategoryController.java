@@ -6,6 +6,7 @@ package com.springmeal.backend.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -37,8 +38,8 @@ public class CategoryController {
 
 	@PostMapping("/categories")
 	@PreAuthorize("hasRole('admin')")
-	public Category saveCategory(@RequestBody Category category) {
-		return categoryServiceImpl.saveCategory(category);
+	public ResponseEntity<Category> saveCategory(@RequestBody Category category) {
+		return ResponseEntity.ok(categoryServiceImpl.saveCategory(category));
 	}
 
 	@GetMapping("/categories/{id}")
@@ -65,8 +66,9 @@ public class CategoryController {
 
 	@DeleteMapping("/categories/{id}")
 	@PreAuthorize("hasRole('admin')")
-	public void deleteCategory(@PathVariable(name = "id") int id) {
+	public ResponseEntity<String> deleteCategory(@PathVariable(name = "id") int id) {
 		categoryServiceImpl.deleteCategory(id);
+		return ResponseEntity.ok("Deleted");
 	}
 
 }

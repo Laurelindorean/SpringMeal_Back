@@ -27,7 +27,7 @@ public interface IOrderService {
 
 	public void deleteOrder(int id);
 
-	public List<Order> findByUser(User user);
+	public List<Order> findByUserUsername(String username);
 
 	public List<Order> findByDate(Date date, String cmp);
 

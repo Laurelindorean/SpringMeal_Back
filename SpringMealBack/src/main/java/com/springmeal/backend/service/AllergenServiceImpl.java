@@ -12,7 +12,7 @@ import com.springmeal.backend.dao.IAllergenDAO;
 import com.springmeal.backend.dto.Allergen;
 
 /**
- * @author Joan
+ * @author Joan, Palmira
  *
  */
 @Service
@@ -32,8 +32,8 @@ public class AllergenServiceImpl implements IAllergenService {
 	}
 
 	@Override
-	public Allergen findById(int codigo) {
-		return iAllergenDAO.findById(codigo).get();
+	public Allergen findById(int id) {
+		return iAllergenDAO.findById(id).get();
 	}
 
 	@Override
@@ -42,9 +42,14 @@ public class AllergenServiceImpl implements IAllergenService {
 	}
 
 	@Override
-	public void deleteAllergen(int codigo) {
-		iAllergenDAO.deleteById(codigo);
+	public void deleteAllergen(int id) {
+		iAllergenDAO.deleteById(id);
 
+	}
+
+	@Override
+	public Allergen findByPartialName(String name) {
+		return iAllergenDAO.findByPartialName(name);
 	}
 
 }

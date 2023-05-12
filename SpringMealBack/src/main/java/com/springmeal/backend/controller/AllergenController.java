@@ -6,6 +6,7 @@ package com.springmeal.backend.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -37,24 +38,29 @@ public class AllergenController {
 
 	@PostMapping("/allergens")
 	@PreAuthorize("hasRole('admin')")
-	public Allergen guardarAllergen(@RequestBody Allergen allergen) {
-		return allergenServiceImpl.saveAllergen(allergen);
+	public ResponseEntity<Allergen> guardarAllergen(@RequestBody Allergen allergen) {
+		return ResponseEntity.ok(allergenServiceImpl.saveAllergen(allergen));
 	}
 
-	@GetMapping("/allergens/{codigo}")
-	public Allergen findById(@PathVariable(name = "codigo") int codigo) {
+	@GetMapping("/allergens/{id}")
+	public Allergen findById(@PathVariable(name = "id") int id) {
 		Allergen allergen = new Allergen();
-		allergen = allergenServiceImpl.findById(codigo);
+		allergen = allergenServiceImpl.findById(id);
 		return allergen;
 	}
 
-	@PutMapping("/allergens/{codigo}")
+	@GetMapping("/allergens/name/{name}")
+	public Allergen findByName(@PathVariable(name = "name") String name) {
+		return allergenServiceImpl.findByPartialName(name);
+	}
+
+	@PutMapping("/allergens/{id}")
 	@PreAuthorize("hasRole('admin')")
-	public Allergen actualizarAllergen(@PathVariable(name = "codigo") int codigo, @RequestBody Allergen allergen) {
+	public Allergen actualizarAllergen(@PathVariable(name = "id") int id, @RequestBody Allergen allergen) {
 
 		Allergen allergen_seleccionado = new Allergen();
 		Allergen allergen_actualizado = new Allergen();
-		allergen_seleccionado = allergenServiceImpl.findById(codigo);
+		allergen_seleccionado = allergenServiceImpl.findById(id);
 		allergen_seleccionado.setName(allergen.getName());
 
 		allergen_actualizado = allergenServiceImpl.updateAllergen(allergen_seleccionado);
@@ -62,10 +68,11 @@ public class AllergenController {
 		return allergen_actualizado;
 	}
 
-	@DeleteMapping("/allergens/{codigo}")
+	@DeleteMapping("/allergens/{id}")
 	@PreAuthorize("hasRole('admin')")
-	public void eliminarAllergen(@PathVariable(name = "codigo") int codigo) {
-		allergenServiceImpl.deleteAllergen(codigo);
+	public ResponseEntity<String> eliminarAllergen(@PathVariable(name = "id") int id) {
+		allergenServiceImpl.deleteAllergen(id);
+		return ResponseEntity.ok("Deleted");
 	}
 
 }
