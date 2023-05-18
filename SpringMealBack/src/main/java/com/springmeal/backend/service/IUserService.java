@@ -17,9 +17,9 @@ public interface IUserService {
 
 	public User saveUser(User user); 
 
-	public User findById(int codigo); 
+	public User findById(int id); 
 
 	public User updateUser(User user); 
 
-	public void deleteUser(int codigo);
+	public void deleteUser(int id);
 }

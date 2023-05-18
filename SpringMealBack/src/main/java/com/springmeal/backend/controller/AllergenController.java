@@ -21,7 +21,7 @@ import com.springmeal.backend.dto.Allergen;
 import com.springmeal.backend.service.AllergenServiceImpl;
 
 /**
- * @author Joan
+ * @author Joan, Palmira, Aitor
  *
  */
 @RestController

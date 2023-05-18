@@ -32,8 +32,8 @@ public class UserServiceImpl implements IUserService {
 	}
 
 	@Override
-	public User findById(int codigo) {
-		return iUserDAO.findById(codigo).get();
+	public User findById(int id) {
+		return iUserDAO.findById(id).get();
 	}
 
 	@Override
@@ -42,8 +42,8 @@ public class UserServiceImpl implements IUserService {
 	}
 
 	@Override
-	public void deleteUser(int codigo) {
-		iUserDAO.deleteById(codigo);
+	public void deleteUser(int id) {
+		iUserDAO.deleteById(id);
 
 	}
 

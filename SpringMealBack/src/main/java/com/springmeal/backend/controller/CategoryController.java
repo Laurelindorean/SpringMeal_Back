@@ -21,7 +21,7 @@ import com.springmeal.backend.dto.Category;
 import com.springmeal.backend.service.CategoryServiceImpl;
 
 /**
- * @author aitor
+ * @author aitor, Palmira, Joan
  *
  */
 @RestController

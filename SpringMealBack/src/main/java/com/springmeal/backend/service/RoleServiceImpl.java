@@ -35,8 +35,8 @@ public class RoleServiceImpl implements IRoleService {
 	}
 
 	@Override
-	public Role findById(int codigo) {
-		return iRoleDAO.findById(codigo).get();
+	public Role findById(int id) {
+		return iRoleDAO.findById(id).get();
 	}
 
 	@Override
@@ -45,8 +45,8 @@ public class RoleServiceImpl implements IRoleService {
 	}
 
 	@Override
-	public void deleteRole(int codigo) {
-		iRoleDAO.deleteById(codigo);
+	public void deleteRole(int id) {
+		iRoleDAO.deleteById(id);
 
 	}
 

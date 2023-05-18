@@ -17,11 +17,11 @@ public interface IRoleService {
 
 	public Role saveRole(Role role); 
 
-	public Role findById(int codigo); 
+	public Role findById(int id); 
 
-	public Role updateRole(Role role); 
+	public Role updateRole(Role id); 
 
-	public void deleteRole(int codigo);
+	public void deleteRole(int id);
 	
 	public Role findByRole(String role);
 
