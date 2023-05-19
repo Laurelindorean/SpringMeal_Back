@@ -2,7 +2,7 @@ CREATE DATABASE  IF NOT EXISTS `Springmeal` /*!40100 DEFAULT CHARACTER SET utf8m
 USE `Springmeal`;
 -- MySQL dump 10.13  Distrib 8.0.28, for Win64 (x86_64)
 --
--- Host: containers-us-west-193.railway.app    Database: Springmeal
+-- Host: containers-us-west-182.railway.app    Database: Springmeal
 -- ------------------------------------------------------
 -- Server version	8.0.33
 
@@ -26,7 +26,7 @@ DROP TABLE IF EXISTS `allergens`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `allergens` (
   `id` int NOT NULL AUTO_INCREMENT,
-  `name` varchar(155) DEFAULT NULL,
+  `name` varchar(155) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -50,9 +50,9 @@ DROP TABLE IF EXISTS `category`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `category` (
   `id` int NOT NULL AUTO_INCREMENT,
-  `name` varchar(255) DEFAULT NULL,
+  `name` varchar(255) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -61,7 +61,7 @@ CREATE TABLE `category` (
 
 LOCK TABLES `category` WRITE;
 /*!40000 ALTER TABLE `category` DISABLE KEYS */;
-INSERT INTO `category` VALUES (1,'starters'),(2,'drinks'),(3,'dessert');
+INSERT INTO `category` VALUES (1,'starters'),(2,'main course');
 /*!40000 ALTER TABLE `category` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -74,14 +74,15 @@ DROP TABLE IF EXISTS `dish`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `dish` (
   `id` int NOT NULL AUTO_INCREMENT,
-  `name` varchar(155) DEFAULT NULL,
-  `description` text,
-  `image` blob,
-  `id_category` int DEFAULT NULL,
+  `name` varchar(155) NOT NULL,
+  `description` text NOT NULL,
+  `image` blob NOT NULL,
+  `price` float NOT NULL,
+  `id_category` int NOT NULL,
   PRIMARY KEY (`id`),
   KEY `id_category` (`id_category`),
   CONSTRAINT `dish_ibfk_1` FOREIGN KEY (`id_category`) REFERENCES `category` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -90,7 +91,7 @@ CREATE TABLE `dish` (
 
 LOCK TABLES `dish` WRITE;
 /*!40000 ALTER TABLE `dish` DISABLE KEYS */;
-INSERT INTO `dish` VALUES (1,'caesar salad','Green salad with chesse and fried chicken',_binary 'foto.png',1),(2,'paella','paella with chicken and vegetables',_binary 'foto2.png',2),(3,'Roast veal sweetbread','toasted grains, macadamia, jus noisette',_binary 'foto.png',1);
+INSERT INTO `dish` VALUES (1,'caesar salad','Green salad with chesse and fried chicken',_binary 'foto.png',6.45,1),(2,'Paella','paella with chicken and vegetables',_binary 'foto2.png',12.5,2);
 /*!40000 ALTER TABLE `dish` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -103,14 +104,14 @@ DROP TABLE IF EXISTS `dishallergens`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `dishallergens` (
   `id` int NOT NULL AUTO_INCREMENT,
-  `id_dish` int DEFAULT NULL,
+  `id_dish` int NOT NULL,
   `id_allergens` int DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `id_dish` (`id_dish`),
   KEY `id_allergens` (`id_allergens`),
   CONSTRAINT `dishallergens_ibfk_1` FOREIGN KEY (`id_dish`) REFERENCES `dish` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `dishallergens_ibfk_2` FOREIGN KEY (`id_allergens`) REFERENCES `allergens` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -132,8 +133,8 @@ DROP TABLE IF EXISTS `orderdish`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `orderdish` (
   `id` int NOT NULL AUTO_INCREMENT,
-  `id_orders` int DEFAULT NULL,
-  `id_dish` int DEFAULT NULL,
+  `id_orders` int NOT NULL,
+  `id_dish` int NOT NULL,
   PRIMARY KEY (`id`),
   KEY `id_orders` (`id_orders`),
   KEY `id_dish` (`id_dish`),
@@ -161,15 +162,15 @@ DROP TABLE IF EXISTS `orders`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `orders` (
   `id` int NOT NULL AUTO_INCREMENT,
-  `date` date DEFAULT NULL,
-  `id_slot` int DEFAULT NULL,
-  `id_user` int DEFAULT NULL,
+  `date` date NOT NULL,
+  `id_slot` int NOT NULL,
+  `id_user` int NOT NULL,
   PRIMARY KEY (`id`),
   KEY `id_slot` (`id_slot`),
   KEY `id_user` (`id_user`),
   CONSTRAINT `orders_ibfk_1` FOREIGN KEY (`id_slot`) REFERENCES `slot` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `orders_ibfk_2` FOREIGN KEY (`id_user`) REFERENCES `user` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -178,7 +179,7 @@ CREATE TABLE `orders` (
 
 LOCK TABLES `orders` WRITE;
 /*!40000 ALTER TABLE `orders` DISABLE KEYS */;
-INSERT INTO `orders` VALUES (1,'2023-05-01',1,1),(2,'2023-05-04',2,2);
+INSERT INTO `orders` VALUES (1,'2023-05-01',1,1);
 /*!40000 ALTER TABLE `orders` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -191,7 +192,7 @@ DROP TABLE IF EXISTS `role`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `role` (
   `id` int NOT NULL AUTO_INCREMENT,
-  `name` varchar(50) DEFAULT NULL,
+  `name` varchar(50) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -202,7 +203,7 @@ CREATE TABLE `role` (
 
 LOCK TABLES `role` WRITE;
 /*!40000 ALTER TABLE `role` DISABLE KEYS */;
-INSERT INTO `role` VALUES (1,'admin'),(2,'user');
+INSERT INTO `role` VALUES (1,'ROLE_admin'),(2,'ROLE_user');
 /*!40000 ALTER TABLE `role` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -215,8 +216,8 @@ DROP TABLE IF EXISTS `slot`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `slot` (
   `id` int NOT NULL AUTO_INCREMENT,
-  `start` time DEFAULT NULL,
-  `end` time DEFAULT NULL,
+  `start` time NOT NULL,
+  `end` time NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -240,16 +241,18 @@ DROP TABLE IF EXISTS `user`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `user` (
   `id` int NOT NULL AUTO_INCREMENT,
-  `name` varchar(150) DEFAULT NULL,
-  `surname` varchar(255) DEFAULT NULL,
-  `email` varchar(255) DEFAULT NULL,
-  `dni` varchar(9) DEFAULT NULL,
-  `password` varchar(50) DEFAULT NULL,
+  `name` varchar(150) NOT NULL,
+  `surname` varchar(255) NOT NULL,
+  `username` varchar(200) NOT NULL,
+  `email` varchar(255) NOT NULL,
+  `dni` varchar(9) NOT NULL,
+  `password` varchar(500) NOT NULL,
   `id_role` int DEFAULT NULL,
   PRIMARY KEY (`id`),
+  UNIQUE KEY `username` (`username`),
   KEY `id_role` (`id_role`),
   CONSTRAINT `user_ibfk_1` FOREIGN KEY (`id_role`) REFERENCES `role` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -258,7 +261,7 @@ CREATE TABLE `user` (
 
 LOCK TABLES `user` WRITE;
 /*!40000 ALTER TABLE `user` DISABLE KEYS */;
-INSERT INTO `user` VALUES (1,'Palmira','Laurelindorean','palmira1@hotmail.com','47758623C','1234',1),(2,'Aitor','AitorIglesias','aitor1@hotmail.com','17899563A','1234',2),(3,'Joan','JoanLapeyra','Joan1@hotmail.com','14778996S','1234',1);
+INSERT INTO `user` VALUES (1,'Palmira','Romia','Laurelindorean','palmira1@hotmail.com','11111111C','$2a$10$Ueu0cqImXhXvjFSu7xbXSu9rb/Vo/sGqFbz3eQoEXZszWE63fFeyW',1);
 /*!40000 ALTER TABLE `user` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -271,4 +274,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-05-05  1:23:01
+-- Dump completed on 2023-05-19  8:56:16
