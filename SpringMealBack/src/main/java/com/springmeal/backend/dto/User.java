@@ -1,6 +1,8 @@
 package com.springmeal.backend.dto;
 
 
+
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 
@@ -21,6 +23,7 @@ public class User {
 	@Column(name = "id")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
+	private String username;
 	@Column(name = "name")
 	private String name;
 	@Column(name = "surname")
@@ -93,5 +96,15 @@ public class User {
 	public void setSurname(String surname) {
 		this.surname = surname;
 	}
+
+	public String getUsername() {
+		return username;
+	}
+
+	public void setUsername(String username) {
+		this.username = username;
+		
+	}
+	
 
 }

@@ -24,42 +24,42 @@ import jakarta.persistence.Table;
 @Entity
 @Table(name = "dish")
 public class Dish {
-	// Atributos de entidad departamento
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
-	private String name; 
+	private String name;
 	private String description;
-	
+	private double price;
 	
 	@OneToMany(fetch = FetchType.LAZY)
 	@JoinColumn(name = "id_dish")
 	private List<DishAllergens> dishAllergen;
-	
+
 	@OneToMany(fetch = FetchType.LAZY)
 	@JoinColumn(name = "id_dish")
-	private List<OrderDish> orderDish;	
-	
+	private List<OrderDish> orderDish;
+
 	private byte[] image;
 
 	@ManyToOne
 	@JoinColumn(name = "id_category")
 	private Category category;
 
-	// CONSTRUCTORES
+
 	public Dish() {
 
 	}
 
-	public Dish(String name, String description, byte[] image, Category category) {
+	public Dish(String name, String description, byte[] image, double price, Category category) {
 		this.name = name;
 		this.description = description;
 		this.image = image;
+		this.price = price;
 		this.category = category;
 
 	}
 
-	// GETTERS Y SETTERS
 	public int getId() {
 		return id;
 	}
@@ -99,7 +99,7 @@ public class Dish {
 	public void setCategory(Category category) {
 		this.category = category;
 	}
-	
+
 	@JsonIgnore
 	public List<DishAllergens> getDishAllergen() {
 		return dishAllergen;
@@ -118,10 +118,13 @@ public class Dish {
 		this.orderDish = orderDish;
 	}
 
-	// TO STRING
-	@Override
-	public String toString() {
-		return "Dish [id=" + id + ", name=" + name + ", description=" + description + ", image=" + image + "]";
+	public double getPrice() {
+		return price;
 	}
+
+	public void setPrice(double price) {
+		this.price = price;
+	}
+
 
 }

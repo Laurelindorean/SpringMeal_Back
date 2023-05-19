@@ -18,7 +18,7 @@ public interface ISlotService {
 
 	public Slot saveSlot(Slot slot);
 
-	public Slot slotByID(int id);
+	public Slot findByID(int id);
 
 	public Slot updateSlot(Slot slot);
 

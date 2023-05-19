@@ -22,28 +22,28 @@ public class UserServiceImpl implements IUserService {
 	IUserDAO iUserDAO;
 
 	@Override
-	public List<User> listarUsers() {
+	public List<User> listUsers() {
 		return iUserDAO.findAll();
 	}
 
 	@Override
-	public User guardarUser(User user) {
+	public User saveUser(User user) {
 		return iUserDAO.save(user);
 	}
 
 	@Override
-	public User userById(int codigo) {
-		return iUserDAO.findById(codigo).get();
+	public User findById(int id) {
+		return iUserDAO.findById(id).get();
 	}
 
 	@Override
-	public User actualizarUser(User user) {
+	public User updateUser(User user) {
 		return iUserDAO.save(user);
 	}
 
 	@Override
-	public void eliminarUser(int codigo) {
-		iUserDAO.deleteById(codigo);
+	public void deleteUser(int id) {
+		iUserDAO.deleteById(id);
 
 	}
 

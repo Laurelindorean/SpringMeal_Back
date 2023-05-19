@@ -6,6 +6,8 @@ package com.springmeal.backend.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -36,28 +38,33 @@ public class SlotController {
 	}
 
 	@PostMapping("/slot")
-	public Slot saveSlot(@RequestBody Slot slot) {
-		return slotServiceImpl.saveSlot(slot);
+	@PreAuthorize("hasRole('admin')")
+	public ResponseEntity<Slot> saveSlot(@RequestBody Slot slot) {
+		return ResponseEntity.ok(slotServiceImpl.saveSlot(slot));
 	}
 
 	@GetMapping("/slot/{id}")
-	public Slot slotByID(@PathVariable(name = "id") int id) {
+	@PreAuthorize("hasRole('admin')")
+	public Slot findById(@PathVariable(name = "id") int id) {
 		Slot slot_id = new Slot();
-		slot_id = slotServiceImpl.slotByID(id);
+		slot_id = slotServiceImpl.findByID(id);
 		return slot_id;
 	}
 
 	@PutMapping("/slot/{id}")
+	@PreAuthorize("hasRole('admin')")
 	public Slot updateSlot(@PathVariable(name = "id") int id, @RequestBody Slot slot) {
 		Slot slot_sel = new Slot();
-		slot_sel = slotServiceImpl.slotByID(id);
+		slot_sel = slotServiceImpl.findByID(id);
 		slot_sel.setStart(slot.getStart());
 		slot_sel.setEnd(slot.getEnd());
 		return slotServiceImpl.updateSlot(slot_sel);
 	}
 
 	@DeleteMapping("/slot/{id}")
-	public void deleteSlot(@PathVariable(name = "id") int id) {
+	@PreAuthorize("hasRole('admin')")
+	public ResponseEntity<String> deleteSlot(@PathVariable(name = "id") int id) {
 		slotServiceImpl.deleteSlot(id);
+		return ResponseEntity.ok("Deleted");
 	}
 }

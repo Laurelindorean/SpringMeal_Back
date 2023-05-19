@@ -13,13 +13,13 @@ import com.springmeal.backend.dto.Category;
  */
 public interface ICategoryService {
 	// Metodos del CRUD
-	public List<Category> listarCategory();
+	public List<Category> listCategory();
 
-	public Category guardarCategory(Category category);
+	public Category saveCategory(Category category);
 
-	public Category categoryById(int id);
+	public Category findById(int id);
 
-	public Category actualizarCategory(Category category);
+	public Category updateCategory(Category category);
 
-	public void eliminarCategory(int id);
+	public void deleteCategory(int id);
 }

@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import com.springmeal.backend.dao.IRoleDAO;
 import com.springmeal.backend.dto.Role;
+import com.springmeal.backend.dto.User;
 
 /**
  * @author Joan
@@ -20,31 +21,46 @@ public class RoleServiceImpl implements IRoleService {
 
 	@Autowired
 	IRoleDAO iRoleDAO;
+	@Autowired
+	IUserService userService;
 
 	@Override
-	public List<Role> listarRoles() {
+	public List<Role> listRoles() {
 		return iRoleDAO.findAll();
 	}
 
 	@Override
-	public Role guardarRole(Role role) {
+	public Role saveRole(Role role) {
 		return iRoleDAO.save(role);
 	}
 
 	@Override
-	public Role roleById(int codigo) {
-		return iRoleDAO.findById(codigo).get();
+	public Role findById(int id) {
+		return iRoleDAO.findById(id).get();
 	}
 
 	@Override
-	public Role actualizarRole(Role role) {
+	public Role updateRole(Role role) {
 		return iRoleDAO.save(role);
 	}
 
 	@Override
-	public void eliminarRole(int codigo) {
-		iRoleDAO.deleteById(codigo);
+	public void deleteRole(int id) {
+		iRoleDAO.deleteById(id);
 
+	}
+
+	@Override
+	public Role findByRole(String role) {
+		return iRoleDAO.findByName(role).get();
+	}
+
+	@Override
+	public void setRoleAdminByIdUser(int idUser) {
+
+		User userEntity = this.userService.findById(idUser);
+		userEntity.setRole(this.iRoleDAO.findByName("ROLE_admin").get());
+		this.userService.updateUser(userEntity);
 	}
 
 }

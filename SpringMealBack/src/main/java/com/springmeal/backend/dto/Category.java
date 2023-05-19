@@ -23,7 +23,7 @@ import jakarta.persistence.Table;
 @Entity
 @Table(name = "category")
 public class Category {
-	// Atributos de entidad departamento
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
@@ -34,16 +34,20 @@ public class Category {
 	@JoinColumn(name = "id_category")
 	private List<Dish> dish;
 
-	// CONSTRUCTORES
+
 	public Category() {
 
+	}
+
+	public Category(int id) {
+		this.id = id;
 	}
 
 	public Category(String name) {
 		this.name = name;
 	}
 
-	// GETTERS Y SETTERS
+	
 	public int getId() {
 		return id;
 	}
@@ -62,7 +66,7 @@ public class Category {
 	
 	
 	@JsonIgnore
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "Dish")
+	@OneToMany(fetch = FetchType.LAZY)
 	public List<Dish> getDish() {
 		return dish;
 	}
@@ -71,10 +75,5 @@ public class Category {
 		this.dish = dish;
 	}
 
-	// TO STRING
-	@Override
-	public String toString() {
-		return "Category [id=" + id + ", name=" + name + ", dish=" + dish + "]";
-	}
 
 }

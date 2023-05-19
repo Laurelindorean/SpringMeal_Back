@@ -4,8 +4,9 @@
 package com.springmeal.backend.controller;
 
 import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -14,12 +15,12 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
 import com.springmeal.backend.dto.User;
 import com.springmeal.backend.service.UserServiceImpl;
+import com.springmeal.backend.util.SpringMealUtils;
 
 /**
- * @author joan
+ * @author joan, Palmira, Aitor
  *
  */
 @RestController
@@ -27,46 +28,79 @@ import com.springmeal.backend.service.UserServiceImpl;
 public class UserController {
 
 	@Autowired
-	UserServiceImpl userServiceImpl;
+	private UserServiceImpl userServiceImpl;
 
 	@GetMapping("/users")
-	public List<User> listarUsers() {
-		return userServiceImpl.listarUsers();
+	@PreAuthorize("hasRole('admin')")
+	public List<User> listUser() {
+		return userServiceImpl.listUsers();
 	}
 
 	@PostMapping("/users")
-	public User guardarUser(@RequestBody User user) {
-		return userServiceImpl.guardarUser(user);
+	@PreAuthorize("hasRole('admin')")
+	public ResponseEntity<User> saveUser(@RequestBody User user) {
+		return ResponseEntity.ok(userServiceImpl.saveUser(user));
 	}
 
-	@GetMapping("/users/{codigo}")
-	public User userById(@PathVariable(name = "codigo") int codigo) {
-		User user = new User();
-		user = userServiceImpl.userById(codigo);
-		return user;
+	@GetMapping("/users/{id}")
+	public User findById(@PathVariable(name = "id") int id) {
+		// this endpoint won't work unless the idUser = codigo
+		if (SpringMealUtils.getUserDetails().getId() != id) {
+			throw new RuntimeException("You're not allowed to see this User");
+		}
+		return userServiceImpl.findById(id);
 	}
 
-	@PutMapping("/users/{codigo}")
-	public User actualizarUser(@PathVariable(name = "codigo") int codigo, @RequestBody User user) {
-
-		User user_seleccionado = new User();
-		User user_actualizado = new User();
-		user_seleccionado = userServiceImpl.userById(codigo);
-		user_seleccionado.setDni(user.getDni());
-		user_seleccionado.setEmail(user.getEmail());
-		user_seleccionado.setName(user.getName());
-		user_seleccionado.setPassword(user.getPassword());
-		user_seleccionado.setRole(user.getRole());
-		user_seleccionado.setSurname(user.getSurname());
-
-		user_actualizado = userServiceImpl.actualizarUser(user_seleccionado);
-
-		return user_actualizado;
+	// This endpoint will return any user by id and it will be only accesible by
+	// admins
+	@GetMapping("/users/admin/{id}")
+	@PreAuthorize("hasRole('admin')")
+	public User findUsersById(@PathVariable(name = "id") int id) {
+		return userServiceImpl.findById(id);
 	}
 
-	@DeleteMapping("/users/{codigo}")
-	public void eliminarUser(@PathVariable(name = "codigo") int codigo) {
-		userServiceImpl.eliminarUser(codigo);
+	@PutMapping("/users/{id}")
+	public User updateUser(@PathVariable(name = "id") int id, @RequestBody User user) {
+
+		if (SpringMealUtils.getUserDetails().getId() != id) {
+			throw new RuntimeException("You're not allowed to update this User");
+		}
+		
+		User user_selected = new User();
+		User user_updated = new User();
+		user_selected = userServiceImpl.findById(id);
+		user_selected.setDni(user.getDni());
+		user_selected.setEmail(user.getEmail());
+		user_selected.setName(user.getName());
+		user_selected.setPassword(user.getPassword());
+		user_selected.setSurname(user.getSurname());
+
+		user_updated = userServiceImpl.updateUser(user_selected);
+		return user_updated;
+	}
+
+	@PutMapping("/users/update/{id}")
+	@PreAuthorize("hasRole('admin')")
+	public User updateUserByAdmin(@PathVariable(name = "id") int id, @RequestBody User user) {
+
+		User user_selected = new User();
+		User user_updated = new User();
+		user_selected = userServiceImpl.findById(id);
+		user_selected.setDni(user.getDni());
+		user_selected.setEmail(user.getEmail());
+		user_selected.setName(user.getName());
+		user_selected.setPassword(user.getPassword());
+		user_selected.setSurname(user.getSurname());
+
+		user_updated = userServiceImpl.updateUser(user_selected);
+		return user_updated;
+	}
+
+	@DeleteMapping("/users/{id}")
+	@PreAuthorize("hasRole('admin')")
+	public ResponseEntity<String> deleteUser(@PathVariable(name = "id") int id) {
+		userServiceImpl.deleteUser(id);
+		return ResponseEntity.ok("User deleted");
 	}
 
 }

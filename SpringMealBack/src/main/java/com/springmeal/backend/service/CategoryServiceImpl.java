@@ -22,27 +22,27 @@ public class CategoryServiceImpl implements ICategoryService {
 	ICategoryDAO iCategoryDAO;
 
 	@Override
-	public List<Category> listarCategory() {
+	public List<Category> listCategory() {
 		return iCategoryDAO.findAll();
 	}
 
 	@Override
-	public Category guardarCategory(Category category) {
+	public Category saveCategory(Category category) {
 		return iCategoryDAO.save(category);
 	}
 
 	@Override
-	public Category categoryById(int id) {
+	public Category findById(int id) {
 		return iCategoryDAO.findById(id).get();
 	}
 
 	@Override
-	public Category actualizarCategory(Category category) {
+	public Category updateCategory(Category category) {
 		return iCategoryDAO.save(category);
 	}
 
 	@Override
-	public void eliminarCategory(int id) {
+	public void deleteCategory(int id) {
 		iCategoryDAO.deleteById(id);
 
 	}

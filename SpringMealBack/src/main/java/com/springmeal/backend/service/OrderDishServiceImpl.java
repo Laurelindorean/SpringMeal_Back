@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.springmeal.backend.dao.IOrderDishDAO;
+import com.springmeal.backend.dto.Order;
 import com.springmeal.backend.dto.OrderDish;
 
 /**
@@ -32,7 +33,7 @@ public class OrderDishServiceImpl implements IOrderDishService {
 	}
 
 	@Override
-	public OrderDish orderDishById(int id) {
+	public OrderDish findById(int id) {
 		return iOrderDishDAO.findById(id).get();
 	}
 
@@ -44,6 +45,11 @@ public class OrderDishServiceImpl implements IOrderDishService {
 	@Override
 	public void deleteOrderDish(int id) {
 		iOrderDishDAO.deleteById(id);
+	}
+
+	@Override
+	public List<OrderDish> findByOrder(Order order) {
+		return iOrderDishDAO.findByOrder(order);
 	}
 
 }

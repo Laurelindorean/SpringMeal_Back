@@ -12,5 +12,7 @@ import com.springmeal.backend.dto.User;
  *
  */
 public interface IUserDAO extends JpaRepository<User, Integer> {
+	//Creo este endpoint para el jwt
+	public User findByUsername(String username);
 
 }

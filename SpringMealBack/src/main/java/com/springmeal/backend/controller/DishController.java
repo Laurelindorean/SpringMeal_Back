@@ -6,6 +6,12 @@ package com.springmeal.backend.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort.Direction;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -19,7 +25,7 @@ import com.springmeal.backend.dto.Dish;
 import com.springmeal.backend.service.DishServiceImpl;
 
 /**
- * @author aitor
+ * @author aitor, joan, palmira
  *
  */
 @RestController
@@ -30,42 +36,79 @@ public class DishController {
 	DishServiceImpl dishServiceImpl;
 
 	@GetMapping("/dishes")
-	public List<Dish> listarDish() {
-		return dishServiceImpl.listarDish();
+	public List<Dish> listDish() {
+		return dishServiceImpl.listDish();
 	}
 
 	@PostMapping("/dishes")
-	public Dish guardarDish(@RequestBody Dish dish) {
-		return dishServiceImpl.guardarDish(dish);
+	@PreAuthorize("hasRole('admin')")
+	public ResponseEntity<Dish> saveDish(@RequestBody Dish dish) {
+		return ResponseEntity.ok(dishServiceImpl.saveDish(dish));
 	}
 
 	@GetMapping("/dishes/{id}")
-	public Dish dishById(@PathVariable(name = "id") int id) {
+	public Dish findById(@PathVariable(name = "id") int id) {
 		Dish dish = new Dish();
-		dish = dishServiceImpl.dishById(id);
+		dish = dishServiceImpl.findById(id);
 		return dish;
 	}
 
+	// To sort all the dishes by name
+	@GetMapping("/dishes/sortByName")
+	public Page<Dish> listDishSorted() {
+		Pageable pageable = PageRequest.of(0, 100, Direction.ASC, "name");
+		return this.dishServiceImpl.listDishOrdered(pageable);
+	}
+
+	// To sort all the dishes by price
+	@GetMapping("/dishes/sortByPrice")
+	public Page<Dish> listDishSortedByPrice() {
+		Pageable pageable = PageRequest.of(0, 100, Direction.ASC, "price");
+		return this.dishServiceImpl.listDishOrdered(pageable);
+	}
+
+	/*
+	 * @GetMapping("/dishes/name/{name}") public List<Dish>
+	 * findByName(@PathVariable(name = "name") String name) { return
+	 * dishServiceImpl.findByName(name); }
+	 */
+
+	@GetMapping("/dishes/partialName/{name}")
+	public List<Dish> findByPartialName(@PathVariable(name = "name") String name) {
+		return dishServiceImpl.findByPartialName(name);
+	}
+
+	@GetMapping("/dishes/category/{category}")
+	public Page<Dish> findByCategory(@PathVariable String category) {
+		// this allows us to sort the dishes by name ascendent with ASC or descendent
+		// with DESC
+		Pageable pageable = PageRequest.of(0, 100, Direction.ASC, "name");
+		return dishServiceImpl.findByCategory(category, pageable);
+	}
+
 	@PutMapping("/dishes/{id}")
-	public Dish actualizarDish(@PathVariable(name = "id") int id, @RequestBody Dish dish) {
+	@PreAuthorize("hasRole('admin')")
+	public Dish updateDish(@PathVariable(name = "id") int id, @RequestBody Dish dish) {
+		Dish dishSelected = new Dish();
+		Dish dishUpdated = new Dish();
+		dishSelected = dishServiceImpl.findById(id);
+		dishSelected.setId(id);
+		dishSelected.setCategory(dish.getCategory());
+		dishSelected.setDescription(dish.getDescription());
+		dishSelected.setImage(dish.getImage());
+		dishSelected.setPrice(dish.getPrice());
+		dishSelected.setName(dish.getName());
 
-		Dish dish_seleccionado = new Dish();
-		Dish dish_actualizado = new Dish();
-		dish_seleccionado = dishServiceImpl.dishById(id);
-		dish_seleccionado.setId(id);
-		dish_seleccionado.setCategory(dish.getCategory());
-		dish_seleccionado.setDescription(dish.getDescription());
-		dish_seleccionado.setImage(dish.getImage());
-		dish_seleccionado.setName(dish.getName());
+		dishUpdated = dishServiceImpl.updateDish(dishSelected);
 
-		dish_actualizado = dishServiceImpl.actualizarDish(dish_seleccionado);
-
-		return dish_actualizado;
+		return dishUpdated;
 	}
 
 	@DeleteMapping("/dishes/{id}")
-	public void eliminarDish(@PathVariable(name = "id") int id) {
-		dishServiceImpl.eliminarDish(id);
+	@PreAuthorize("hasRole('admin')")
+	public ResponseEntity<String> deleteDish(@PathVariable(name = "id") int id) {
+		dishServiceImpl.deleteDish(id);
+		return ResponseEntity.ok("Deleted");
 	}
 
 }
