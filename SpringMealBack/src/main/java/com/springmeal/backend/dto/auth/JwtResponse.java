@@ -13,18 +13,22 @@ public class JwtResponse {
 	private String type;
 	private String username;
 	private int userid;
+	private String roleName;
+
+
 
 	/**
 	 * @param token
 	 * @param type
 	 * @param username
 	 */
-	public JwtResponse(String token, String username, Integer userid) {
+	public JwtResponse(String token, String username, Integer userid, String roleName) {
 		super();
 		this.token = token;
 		this.type = "Bearer";
 		this.username = username;
 		this.userid = userid;
+		this.roleName = roleName;
 	}
 
 	/**
@@ -76,4 +80,11 @@ public class JwtResponse {
 		return userid;
 	}
 
+	public String getRoleName() {
+		return roleName;
+	}
+
+	public void setRoleName(String roleName) {
+		this.roleName = roleName;
+	}
 }
