@@ -14,7 +14,6 @@ import com.springmeal.backend.dao.IUserDAO;
 import com.springmeal.backend.dto.Order;
 import com.springmeal.backend.dto.Slot;
 import com.springmeal.backend.dto.User;
-import com.springmeal.backend.util.SpringMealUtils;
 
 /**
  * @author Palmira
@@ -35,7 +34,6 @@ public class OrderServiceImpl implements IOrderService {
 
 	@Override
 	public Order saveOrder(Order order) {
-		order.setUser(userDAO.findByUsername(SpringMealUtils.getUserDetails().getUsername()));
 		return iOrderDAO.save(order);
 	}
 

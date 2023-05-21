@@ -17,7 +17,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import com.springmeal.backend.dto.User;
 import com.springmeal.backend.service.UserServiceImpl;
-import com.springmeal.backend.util.SpringMealUtils;
 
 /**
  * @author joan, Palmira, Aitor
@@ -44,10 +43,6 @@ public class UserController {
 
 	@GetMapping("/users/{id}")
 	public User findById(@PathVariable(name = "id") int id) {
-		// this endpoint won't work unless the idUser = codigo
-		if (SpringMealUtils.getUserDetails().getId() != id) {
-			throw new RuntimeException("You're not allowed to see this User");
-		}
 		return userServiceImpl.findById(id);
 	}
 
@@ -61,11 +56,6 @@ public class UserController {
 
 	@PutMapping("/users/{id}")
 	public User updateUser(@PathVariable(name = "id") int id, @RequestBody User user) {
-
-		if (SpringMealUtils.getUserDetails().getId() != id) {
-			throw new RuntimeException("You're not allowed to update this User");
-		}
-		
 		User user_selected = new User();
 		User user_updated = new User();
 		user_selected = userServiceImpl.findById(id);

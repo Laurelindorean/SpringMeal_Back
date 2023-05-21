@@ -22,7 +22,6 @@ import com.springmeal.backend.dto.Order;
 import com.springmeal.backend.dto.Slot;
 import com.springmeal.backend.dto.User;
 import com.springmeal.backend.service.OrderServiceImpl;
-import com.springmeal.backend.util.SpringMealUtils;
 
 /**
  * @author Palmira
@@ -70,11 +69,6 @@ public class OrderController {
 	public ResponseEntity<String> deleteOrder(@PathVariable(name = "id") int id) {
 		orderServiceImpl.deleteOrder(id);
 		return ResponseEntity.ok("Deleted");
-	}
-	//It only will return the info it the username that matches
-	@GetMapping("/orders/user")
-	public List<Order> findByUserUsername() {
-		return orderServiceImpl.findByUserUsername(SpringMealUtils.getUserDetails().getUsername());
 	}
 	
 	@GetMapping("/orders/date/{date}")
