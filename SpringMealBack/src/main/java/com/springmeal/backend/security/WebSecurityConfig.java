@@ -16,6 +16,8 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.web.servlet.config.annotation.CorsRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import com.springmeal.backend.security.jwt.AuthEntryPointJwt;
 import com.springmeal.backend.security.jwt.JwtAuthenticationFilter;
@@ -27,7 +29,7 @@ import com.springmeal.backend.security.service.UserDetailsServiceImpl;
  */
 @Configuration
 @EnableMethodSecurity
-public class WebSecurityConfig {
+public class WebSecurityConfig implements WebMvcConfigurer {
 
 	@Autowired
 	private UserDetailsServiceImpl userDetailsService;
@@ -77,4 +79,10 @@ public class WebSecurityConfig {
 
 	}
 
+	@Override
+    public void addCorsMappings(CorsRegistry registry) {
+        registry.addMapping("/**");
+    }
+
+	
 }
