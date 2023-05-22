@@ -5,6 +5,8 @@ package com.springmeal.backend.dto;
 
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.Entity;
 
 import jakarta.persistence.GeneratedValue;
@@ -52,6 +54,7 @@ public class DishAllergens {
 		this.id = id;
 	}
 
+	@JsonIgnore
 	public Dish getDish() {
 		return dish;
 	}
