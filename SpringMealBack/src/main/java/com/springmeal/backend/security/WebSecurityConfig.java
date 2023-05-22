@@ -3,6 +3,9 @@
  */
 package com.springmeal.backend.security;
 
+import java.util.Arrays;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -16,10 +19,16 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.servlet.config.annotation.CorsRegistry;
+import org.springframework.web.util.pattern.PathPatternParser;
 
 import com.springmeal.backend.security.jwt.AuthEntryPointJwt;
 import com.springmeal.backend.security.jwt.JwtAuthenticationFilter;
 import com.springmeal.backend.security.service.UserDetailsServiceImpl;
+
+import jakarta.servlet.http.HttpServletRequest;
 
 /**
  * @author Palmira
@@ -62,7 +71,7 @@ public class WebSecurityConfig {
 
 	@Bean
 	SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-		http.cors()
+		http.cors().configurationSource(new CorsConfig())
 			.and().csrf().disable().exceptionHandling().authenticationEntryPoint(unauthorizedHandler)
 			.and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
 			.and().authorizeHttpRequests()
@@ -76,5 +85,18 @@ public class WebSecurityConfig {
 		return http.build();
 
 	}
-
+	
+	private class CorsConfig implements CorsConfigurationSource {
+		
+		public CorsConfiguration getCorsConfiguration(HttpServletRequest request) {
+			CorsConfiguration corsConfiguration = new CorsConfiguration();
+			corsConfiguration.setAllowedOrigins(Arrays.asList("http://localhost:4200"));  // Permitir todos los orígenes, cambiar según tus necesidades
+			corsConfiguration.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE"));  // Permitir los métodos HTTP que desees
+			corsConfiguration.setAllowedHeaders(List.of("*"));  // Permitir todos los headers, cambiar según tus necesidades
+			corsConfiguration.setAllowCredentials(true);  // Permitir envío de cookies de autenticación, si aplica
+			//corsConfiguration.setPathMatcher(new PathPatternParser().getPathMatcher());  // Configuración del path matcher
+			
+			return corsConfiguration;
+		}		
+	}
 }
