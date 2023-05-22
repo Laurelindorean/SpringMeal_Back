@@ -96,7 +96,7 @@ public class WebSecurityConfig {
 			corsConfiguration.setAllowCredentials(true);  // Permitir envío de cookies de autenticación, si aplica
 			//corsConfiguration.setPathMatcher(new PathPatternParser().getPathMatcher());  // Configuración del path matcher
 			
-			return corsConfiguration;
+			return corsConfiguration; 
 		}		
 	}
 }
