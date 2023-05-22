@@ -72,7 +72,7 @@ public class UserController {
 		user_selected.setDni(user.getDni());
 		user_selected.setEmail(user.getEmail());
 		user_selected.setName(user.getName());
-		user_selected.setPassword(user.getPassword());
+		//user_selected.setPassword(user.getPassword()); don't update password beacuse it should be encrypted
 		user_selected.setSurname(user.getSurname());
 
 		user_updated = userServiceImpl.updateUser(user_selected);
