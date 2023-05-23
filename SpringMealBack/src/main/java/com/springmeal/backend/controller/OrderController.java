@@ -68,9 +68,8 @@ public class OrderController {
 
 	@DeleteMapping(value = "/orders/{id}", produces = MediaType.TEXT_PLAIN_VALUE)
 	@PreAuthorize("hasRole('admin')")
-	public ResponseEntity<String> deleteOrder(@PathVariable(name = "id") int id) {
+	public void deleteOrder(@PathVariable(name = "id") int id) {
 		orderServiceImpl.deleteOrder(id);
-		return ResponseEntity.ok("Deleted");
 	}
 	//It only will return the info it the username that matches
 	@GetMapping("/orders/user")
