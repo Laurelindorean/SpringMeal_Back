@@ -70,9 +70,9 @@ public class AllergenController {
 
 	@DeleteMapping("/allergens/{id}")
 	@PreAuthorize("hasRole('admin')")
-	public ResponseEntity<String> eliminarAllergen(@PathVariable(name = "id") int id) {
+	public void eliminarAllergen(@PathVariable(name = "id") int id) {
 		allergenServiceImpl.deleteAllergen(id);
-		return ResponseEntity.ok("Deleted");
+		
 	}
 
 }

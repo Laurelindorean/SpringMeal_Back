@@ -64,9 +64,8 @@ public class OrderDishController {
 
 	@DeleteMapping("/orderdish/{id}")
 	@PreAuthorize("hasRole('admin')")
-	public ResponseEntity<String> deleteOrderDish(@PathVariable(name = "id") int id) {
+	public void deleteOrderDish(@PathVariable(name = "id") int id) {
 		orderDishServiceImpl.deleteOrderDish(id);
-		return ResponseEntity.ok("Deleted");
 	}
 
 	@GetMapping("/orderdish/order")

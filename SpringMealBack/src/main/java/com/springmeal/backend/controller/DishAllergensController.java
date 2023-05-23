@@ -66,9 +66,9 @@ public class DishAllergensController {
 
 	@DeleteMapping("/dishallergens/{id}")
 	@PreAuthorize("hasRole('admin')")
-	public ResponseEntity<String> deleteDishAllergens(@PathVariable(name = "id") int id) {
+	public void deleteDishAllergens(@PathVariable(name = "id") int id) {
 		dishAllergensServiceImpl.deleteDishAllergens(id);
-		return ResponseEntity.ok("Deleted");
+		
 	}
 
 }

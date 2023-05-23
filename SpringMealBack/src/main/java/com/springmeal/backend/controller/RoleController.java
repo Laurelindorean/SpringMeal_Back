@@ -63,16 +63,16 @@ public class RoleController {
 	}
 
 	@DeleteMapping("/roles/{id}")
-	public ResponseEntity<String> deleteRole(@PathVariable(name = "id") int id) {
+	public void deleteRole(@PathVariable(name = "id") int id) {
 		roleServiceImpl.deleteRole(id);
-		return ResponseEntity.ok("Role deleted");
+		
 	}
 	
 	//EndPoint to change the role of a user
 	@PutMapping("/roles/user/{idUser}")
-	public ResponseEntity<String> setAdminByIdUser(@PathVariable int idUser) {
+	public void setAdminByIdUser(@PathVariable int idUser) {
 		this.roleServiceImpl.setRoleAdminByIdUser(idUser);
-		return ResponseEntity.ok("User set to Admin");
+		
 	}
 
 }

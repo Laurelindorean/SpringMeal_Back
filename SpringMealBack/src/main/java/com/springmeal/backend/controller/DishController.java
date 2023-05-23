@@ -106,9 +106,9 @@ public class DishController {
 
 	@DeleteMapping("/dishes/{id}")
 	@PreAuthorize("hasRole('admin')")
-	public ResponseEntity<String> deleteDish(@PathVariable(name = "id") int id) {
+	public void deleteDish(@PathVariable(name = "id") int id) {
 		dishServiceImpl.deleteDish(id);
-		return ResponseEntity.ok("Deleted");
+		
 	}
 
 }
