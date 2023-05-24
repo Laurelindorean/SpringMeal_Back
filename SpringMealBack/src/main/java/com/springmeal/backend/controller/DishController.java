@@ -3,6 +3,7 @@
  */
 package com.springmeal.backend.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +25,10 @@ import org.springframework.web.bind.annotation.RestController;
 import com.springmeal.backend.dto.Dish;
 import com.springmeal.backend.service.DishServiceImpl;
 
+import com.springmeal.backend.dto.DishAllergens;
+import com.springmeal.backend.service.DishAllergensServiceImpl;
+
+
 /**
  * @author aitor, joan, palmira
  *
@@ -35,6 +40,9 @@ public class DishController {
 	@Autowired
 	DishServiceImpl dishServiceImpl;
 
+	@Autowired
+	DishAllergensServiceImpl dishAllergensServiceImpl;
+
 	@GetMapping("/dishes")
 	public List<Dish> listDish() {
 		return dishServiceImpl.listDish();
@@ -43,7 +51,16 @@ public class DishController {
 	@PostMapping("/dishes")
 	@PreAuthorize("hasRole('admin')")
 	public ResponseEntity<Dish> saveDish(@RequestBody Dish dish) {
-		return ResponseEntity.ok(dishServiceImpl.saveDish(dish));
+		List<DishAllergens> listDishAllergens = dish.getDishAllergen();
+		dish.setDishAllergen(new ArrayList<>());
+		Dish newDish = dishServiceImpl.saveDish(dish);
+		List<DishAllergens> newListDishAllergens = new ArrayList<DishAllergens>();
+		for (DishAllergens dishAllergens : listDishAllergens) {
+			dishAllergens.setDish(newDish);
+			newListDishAllergens.add(dishAllergensServiceImpl.saveDishAllergens(dishAllergens));
+		}
+		newDish.setDishAllergen(newListDishAllergens);
+		return ResponseEntity.ok(newDish);
 	}
 
 	@GetMapping("/dishes/{id}")
@@ -98,6 +115,16 @@ public class DishController {
 		dishSelected.setImage(dish.getImage());
 		dishSelected.setPrice(dish.getPrice());
 		dishSelected.setName(dish.getName());
+
+		for (DishAllergens dishAllergens : dishSelected.getDishAllergen()) {
+			dishAllergensServiceImpl.deleteDishAllergens(dishAllergens.getId());
+		}
+		List<DishAllergens> newListDishAllergens = new ArrayList<DishAllergens>();
+		for (DishAllergens dishAllergens : dish.getDishAllergen()) {
+			dishAllergens.setDish(dishSelected);
+			newListDishAllergens.add(dishAllergensServiceImpl.saveDishAllergens(dishAllergens));
+		}
+		dishSelected.setDishAllergen(dish.getDishAllergen());
 
 		dishUpdated = dishServiceImpl.updateDish(dishSelected);
 
