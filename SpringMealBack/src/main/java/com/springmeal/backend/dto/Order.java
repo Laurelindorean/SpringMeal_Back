@@ -6,6 +6,7 @@ package com.springmeal.backend.dto;
 import java.sql.Date;
 import java.util.List;
 
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.Entity;
@@ -31,6 +32,7 @@ public class Order {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
+	//@JsonFormat(pattern = "dd/MM/yyyy")
 	private Date date;
 
 	@OneToMany(fetch = FetchType.LAZY)

@@ -63,8 +63,7 @@ public class SlotController {
 
 	@DeleteMapping("/slot/{id}")
 	@PreAuthorize("hasRole('admin')")
-	public ResponseEntity<String> deleteSlot(@PathVariable(name = "id") int id) {
+	public void deleteSlot(@PathVariable(name = "id") int id) {
 		slotServiceImpl.deleteSlot(id);
-		return ResponseEntity.ok("Deleted");
 	}
 }

@@ -7,6 +7,7 @@ import java.sql.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -65,11 +66,10 @@ public class OrderController {
 		return orderServiceImpl.updateOrder(order_sel);
 	}
 
-	@DeleteMapping("/orders/{id}")
+	@DeleteMapping(value = "/orders/{id}", produces = MediaType.TEXT_PLAIN_VALUE)
 	@PreAuthorize("hasRole('admin')")
-	public ResponseEntity<String> deleteOrder(@PathVariable(name = "id") int id) {
+	public void deleteOrder(@PathVariable(name = "id") int id) {
 		orderServiceImpl.deleteOrder(id);
-		return ResponseEntity.ok("Deleted");
 	}
 	//It only will return the info it the username that matches
 	@GetMapping("/orders/user")

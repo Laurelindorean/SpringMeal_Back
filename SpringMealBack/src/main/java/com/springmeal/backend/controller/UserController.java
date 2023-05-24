@@ -98,9 +98,8 @@ public class UserController {
 
 	@DeleteMapping("/users/{id}")
 	@PreAuthorize("hasRole('admin')")
-	public ResponseEntity<String> deleteUser(@PathVariable(name = "id") int id) {
+	public void deleteUser(@PathVariable(name = "id") int id) {
 		userServiceImpl.deleteUser(id);
-		return ResponseEntity.ok("User deleted");
 	}
 
 }

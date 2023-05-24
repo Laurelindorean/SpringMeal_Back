@@ -21,8 +21,6 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
-import org.springframework.web.servlet.config.annotation.CorsRegistry;
-import org.springframework.web.util.pattern.PathPatternParser;
 
 import com.springmeal.backend.security.jwt.AuthEntryPointJwt;
 import com.springmeal.backend.security.jwt.JwtAuthenticationFilter;
@@ -77,9 +75,7 @@ public class WebSecurityConfig {
 			.and().authorizeHttpRequests()
 				.requestMatchers("/api/auth/**").permitAll()
 				.anyRequest().authenticated();
-
 		http.authenticationProvider(this.authenticationProvider());
-
 		http.addFilterBefore(this.authenticationJwtTokenFilter(), UsernamePasswordAuthenticationFilter.class);
 
 		return http.build();
@@ -90,7 +86,7 @@ public class WebSecurityConfig {
 		
 		public CorsConfiguration getCorsConfiguration(HttpServletRequest request) {
 			CorsConfiguration corsConfiguration = new CorsConfiguration();
-			corsConfiguration.setAllowedOrigins(Arrays.asList("http://localhost:4200"));  // Permitir todos los orígenes, cambiar según tus necesidades
+			corsConfiguration.setAllowedOrigins(Arrays.asList("http://localhost:4200","https://master.d1m6byqhcr17ju.amplifyapp.com"));  // Permitir todos los orígenes, cambiar según tus necesidades
 			corsConfiguration.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE"));  // Permitir los métodos HTTP que desees
 			corsConfiguration.setAllowedHeaders(List.of("*"));  // Permitir todos los headers, cambiar según tus necesidades
 			corsConfiguration.setAllowCredentials(true);  // Permitir envío de cookies de autenticación, si aplica
