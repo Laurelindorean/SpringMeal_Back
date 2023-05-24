@@ -28,6 +28,8 @@ public interface IDishService {
 	public List<Dish> findByName(String name);
 	
 	public List<Dish> findByPartialName(String partial_name);
+
+	public List<Dish> findByCategoryPartialName(int category_id, String partial_name);
 	
 	public Page<Dish> findByCategory(String category, Pageable pageable);
 	

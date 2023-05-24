@@ -5,6 +5,7 @@ package com.springmeal.backend.service;
 
 import java.util.List;
 
+import com.springmeal.backend.dto.Dish;
 import com.springmeal.backend.dto.DishAllergens;
 
 /**
@@ -22,4 +23,6 @@ public interface IDishAllergensService {
 	public DishAllergens updateDishAllergens(DishAllergens dishAllergens);
 
 	public void deleteDishAllergens(int id);
+
+	public List<DishAllergens> findByDish(Dish dish);
 }

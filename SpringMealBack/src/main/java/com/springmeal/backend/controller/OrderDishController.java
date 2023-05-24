@@ -42,6 +42,8 @@ public class OrderDishController {
 
 	@PostMapping("/orderdish")
 	public ResponseEntity<OrderDish> saveOrderDish(@RequestBody OrderDish orderDish) {
+		System.out.println(orderDish.getDish().getId());
+		System.out.println(orderDish.getOrder().getId());
 		return ResponseEntity.ok(orderDishServiceImpl.saveOrderDish(orderDish));
 	}
 

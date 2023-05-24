@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.springmeal.backend.dao.IDishAllergensDAO;
+import com.springmeal.backend.dto.Dish;
 import com.springmeal.backend.dto.DishAllergens;
 
 /**
@@ -45,5 +46,9 @@ public class DishAllergensServiceImpl implements IDishAllergensService {
 	public void deleteDishAllergens(int id) {
 		iDishAllergensDAO.deleteById(id);
 
+	}
+
+	public List<DishAllergens> findByDish(Dish dish) {
+		return iDishAllergensDAO.findByDish(dish);
 	}
 }

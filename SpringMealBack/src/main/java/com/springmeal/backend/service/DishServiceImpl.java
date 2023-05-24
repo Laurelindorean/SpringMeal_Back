@@ -56,6 +56,11 @@ public class DishServiceImpl implements IDishService {
 	public List<Dish> findByPartialName(String partial_name) {
 		return iDishDAO.findByPartialName(partial_name);
 	}
+
+	@Override
+	public List<Dish> findByCategoryPartialName(int category_id, String partial_name) {
+		return iDishDAO.findByCategoryPartialName(category_id, partial_name);
+	}
 	
 	@Override
 	public Page<Dish>  findByCategory(String category, Pageable pageable) {

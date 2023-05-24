@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.springmeal.backend.dto.Dish;
 import com.springmeal.backend.dto.DishAllergens;
 import com.springmeal.backend.service.DishAllergensServiceImpl;
 
@@ -69,6 +70,11 @@ public class DishAllergensController {
 	public void deleteDishAllergens(@PathVariable(name = "id") int id) {
 		dishAllergensServiceImpl.deleteDishAllergens(id);
 		
+	}
+
+	@GetMapping("/dishallergens/dish")
+	public List<DishAllergens> findByDish(@RequestBody Dish dish) {
+		return dishAllergensServiceImpl.findByDish(dish);
 	}
 
 }

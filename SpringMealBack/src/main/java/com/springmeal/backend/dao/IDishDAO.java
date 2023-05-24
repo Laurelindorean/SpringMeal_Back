@@ -26,7 +26,10 @@ public interface IDishDAO extends JpaRepository<Dish, Integer> {
     @Autowired
     Page<Dish> findByCategoryName(String category, Pageable pageable);
     
-    @Query(value = "SELECT * FROM dish WHERE name LIKE CONCAT('%', ?1, '%')", nativeQuery = true)
+    @Query(value = "SELECT * FROM dish WHERE LOWER(name) LIKE CONCAT('%', LOWER(?1), '%')", nativeQuery = true)
     List<Dish> findByPartialName(String partial_name);
+
+    @Query(value = "SELECT * FROM dish WHERE id_category = ?1 AND name LIKE CONCAT('%', LOWER(?2), '%')", nativeQuery = true)
+    List<Dish> findByCategoryPartialName(int id_category, String partial_name);
 
 }

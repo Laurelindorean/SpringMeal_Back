@@ -100,7 +100,7 @@ public class Dish {
 		this.category = category;
 	}
 
-	
+	@JsonIgnore
 	public List<DishAllergens> getDishAllergen() {
 		return dishAllergen;
 	}

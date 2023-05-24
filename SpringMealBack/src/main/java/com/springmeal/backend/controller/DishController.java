@@ -3,7 +3,6 @@
  */
 package com.springmeal.backend.controller;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,9 +24,6 @@ import org.springframework.web.bind.annotation.RestController;
 import com.springmeal.backend.dto.Dish;
 import com.springmeal.backend.service.DishServiceImpl;
 
-import com.springmeal.backend.dto.DishAllergens;
-import com.springmeal.backend.service.DishAllergensServiceImpl;
-
 
 /**
  * @author aitor, joan, palmira
@@ -40,8 +36,6 @@ public class DishController {
 	@Autowired
 	DishServiceImpl dishServiceImpl;
 
-	@Autowired
-	DishAllergensServiceImpl dishAllergensServiceImpl;
 
 	@GetMapping("/dishes")
 	public List<Dish> listDish() {
@@ -51,16 +45,7 @@ public class DishController {
 	@PostMapping("/dishes")
 	@PreAuthorize("hasRole('admin')")
 	public ResponseEntity<Dish> saveDish(@RequestBody Dish dish) {
-		List<DishAllergens> listDishAllergens = dish.getDishAllergen();
-		dish.setDishAllergen(new ArrayList<>());
-		Dish newDish = dishServiceImpl.saveDish(dish);
-		List<DishAllergens> newListDishAllergens = new ArrayList<DishAllergens>();
-		for (DishAllergens dishAllergens : listDishAllergens) {
-			dishAllergens.setDish(newDish);
-			newListDishAllergens.add(dishAllergensServiceImpl.saveDishAllergens(dishAllergens));
-		}
-		newDish.setDishAllergen(newListDishAllergens);
-		return ResponseEntity.ok(newDish);
+		return ResponseEntity.ok(dishServiceImpl.saveDish(dish));
 	}
 
 	@GetMapping("/dishes/{id}")
@@ -95,6 +80,11 @@ public class DishController {
 		return dishServiceImpl.findByPartialName(name);
 	}
 
+	@GetMapping("/dishes/category/{category}/partialName/{name}")
+	public List<Dish> findByCategoryPartialName(@PathVariable("category") int category_id, @PathVariable("name") String name) {
+		return dishServiceImpl.findByCategoryPartialName(category_id, name);
+	}
+
 	@GetMapping("/dishes/category/{category}")
 	public Page<Dish> findByCategory(@PathVariable String category) {
 		// this allows us to sort the dishes by name ascendent with ASC or descendent
@@ -116,18 +106,6 @@ public class DishController {
 		dishSelected.setPrice(dish.getPrice());
 		dishSelected.setName(dish.getName());
 
-		for (DishAllergens dishAllergens : dishSelected.getDishAllergen()) {
-			dishAllergensServiceImpl.deleteDishAllergens(dishAllergens.getId());
-		}
-		List<DishAllergens> newListDishAllergens = new ArrayList<DishAllergens>();
-		for (DishAllergens dishAllergens : dish.getDishAllergen()) {
-			dishAllergens.setDish(dishSelected);
-			newListDishAllergens.add(dishAllergensServiceImpl.saveDishAllergens(dishAllergens));
-		}
-		dishSelected.setDishAllergen(dish.getDishAllergen());
-
-		dishUpdated = dishServiceImpl.updateDish(dishSelected);
-
 		return dishUpdated;
 	}
 
@@ -139,3 +117,33 @@ public class DishController {
 	}
 
 }
+
+/* En cas que dishAllergens es gestioni des de dish:
+	saveDish(...) {
+		List<DishAllergens> listDishAllergens = dish.getDishAllergen();
+		dish.setDishAllergen(new ArrayList<>());
+		Dish newDish = dishServiceImpl.saveDish(dish);
+		List<DishAllergens> newListDishAllergens = new ArrayList<DishAllergens>();
+		for (DishAllergens dishAllergens : listDishAllergens) {
+			dishAllergens.setDish(newDish);
+			newListDishAllergens.add(dishAllergensServiceImpl.saveDishAllergens(dishAllergens));
+		}
+		newDish.setDishAllergen(newListDishAllergens);
+	}
+		
+	updateDish(...) {
+		...
+		for (DishAllergens dishAllergens : dishSelected.getDishAllergen()) {
+			dishAllergensServiceImpl.deleteDishAllergens(dishAllergens.getId());
+		}
+		List<DishAllergens> newListDishAllergens = new ArrayList<DishAllergens>();
+		for (DishAllergens dishAllergens : dish.getDishAllergen()) {
+			dishAllergens.setDish(dishSelected);
+			newListDishAllergens.add(dishAllergensServiceImpl.saveDishAllergens(dishAllergens));
+		}
+		dishSelected.setDishAllergen(dish.getDishAllergen());
+
+		dishUpdated = dishServiceImpl.updateDish(dishSelected);
+		return dishUpdated
+	}
+		*/
