@@ -70,10 +70,10 @@ public class OrderDishController {
 		orderDishServiceImpl.deleteOrderDish(id);
 	}
 
-	@GetMapping("/orderdish/order")
+	@GetMapping("/orderdish/order/{id}")
 	@PreAuthorize("hasRole('admin')")
-	public List<Dish> findByOrder(@RequestBody Order order) {
-		List<OrderDish> in = orderDishServiceImpl.findByOrder(order);
+	public List<Dish> findByOrder(@PathVariable(name = "id") int id_order) {
+		List<OrderDish> in = orderDishServiceImpl.findByOrder(new Order(id_order));
 		List<Dish> out = new ArrayList<Dish>();
 		for (OrderDish item : in) {
 			out.add(item.getDish());

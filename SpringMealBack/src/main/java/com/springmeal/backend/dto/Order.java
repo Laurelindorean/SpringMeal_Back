@@ -53,6 +53,11 @@ public class Order {
 
 	}
 
+	public Order(int id) {
+		super();
+		this.id = id;
+	}
+
 	/**
 	 * @param id
 	 * @param date
