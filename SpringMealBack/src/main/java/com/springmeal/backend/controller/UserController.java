@@ -91,7 +91,7 @@ public class UserController {
 		user_selected.setName(user.getName());
 		user_selected.setPassword(user.getPassword());
 		user_selected.setSurname(user.getSurname());
-
+		user_selected.setRole(user.getRole());
 		user_updated = userServiceImpl.updateUser(user_selected);
 		return user_updated;
 	}
