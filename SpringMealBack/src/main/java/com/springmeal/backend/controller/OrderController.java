@@ -46,7 +46,13 @@ public class OrderController {
 	public ResponseEntity<Order> saveOrder(@RequestBody Order order) {
 		return ResponseEntity.ok(orderServiceImpl.saveOrder(order));
 	}
-
+	//New endpoint to create orders just for admin
+	@PostMapping("/orders/admin")
+	@PreAuthorize("hasRole('admin')")
+	public ResponseEntity<Order> saveOrderAdmin(@RequestBody Order order){
+		return ResponseEntity.ok(orderServiceImpl.saveOrderAdmin(order));
+	}
+ 
 	@GetMapping("/orders/{id}")
 	@PreAuthorize("hasRole('admin')")
 	public Order findById(@PathVariable(name = "id") int id) {

@@ -20,6 +20,8 @@ public interface IOrderService {
 	public List<Order> listOrder();
 
 	public Order saveOrder(Order order);
+	
+	public Order saveOrderAdmin(Order order);
 
 	public Order findById(int id);
 

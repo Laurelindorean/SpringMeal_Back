@@ -74,4 +74,9 @@ public class OrderServiceImpl implements IOrderService {
 		return iOrderDAO.findBySlotDate(slot.getId(), date);
 	}
 
+	@Override
+	public Order saveOrderAdmin(Order order) {
+		return iOrderDAO.save(order);
+	}
+
 }
