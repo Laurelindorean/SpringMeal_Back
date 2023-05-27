@@ -97,7 +97,7 @@ public class DishController {
 	@PreAuthorize("hasRole('admin')")
 	public Dish updateDish(@PathVariable(name = "id") int id, @RequestBody Dish dish) {
 		Dish dishSelected = new Dish();
-		Dish dishUpdated = new Dish();
+		//Dish dishUpdated = new Dish();
 		dishSelected = dishServiceImpl.findById(id);
 		dishSelected.setId(id);
 		dishSelected.setCategory(dish.getCategory());
@@ -106,7 +106,7 @@ public class DishController {
 		dishSelected.setPrice(dish.getPrice());
 		dishSelected.setName(dish.getName());
 
-		return dishUpdated;
+		return dishServiceImpl.saveDish(dishSelected);
 	}
 
 	@DeleteMapping("/dishes/{id}")
