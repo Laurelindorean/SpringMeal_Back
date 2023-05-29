@@ -13,6 +13,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -26,6 +27,8 @@ import com.springmeal.backend.dto.auth.LoginRequest;
 import com.springmeal.backend.dto.auth.SignupRequest;
 import com.springmeal.backend.security.jwt.JwtTokenProvider;
 import com.springmeal.backend.security.service.UserDetailsImpl;
+
+import jakarta.servlet.http.HttpServletRequest;
 
 /**
  * @author Palmira
@@ -64,6 +67,12 @@ public class AuthController {
 		
 		GrantedAuthority au = ((ArrayList<GrantedAuthority>)userDetails.getAuthorities()).get(0);
 		return ResponseEntity.ok(new JwtResponse(jwt, userDetails.getUsername(), userDetails.getId(), au.getAuthority()));
+	}
+	
+	@GetMapping("/validate-jwt")
+	public ResponseEntity<Boolean> validateJwt(HttpServletRequest request) {
+		String jwt = request.getHeader("Authorization").replace("Bearer", "");
+		return ResponseEntity.ok(this.jwtUtils.validateJwtToken(jwt));
 	}
 	
 	@PostMapping("/signup")
