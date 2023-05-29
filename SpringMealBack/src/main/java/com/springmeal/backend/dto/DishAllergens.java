@@ -53,7 +53,7 @@ public class DishAllergens {
 	}
 	//@JsonIgnore
 	public Dish getDish() {
-		dish.setImage(null); // estalvia recursos
+		if(dish != null) dish.setImage(null); // estalvia recursos
 		return dish;
 	}
 
