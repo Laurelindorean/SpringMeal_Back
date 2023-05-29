@@ -7,6 +7,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -29,6 +30,9 @@ public class UserController {
 
 	@Autowired
 	private UserServiceImpl userServiceImpl;
+	
+	@Autowired
+	private PasswordEncoder encoder;
 
 	@GetMapping("/users")
 	@PreAuthorize("hasRole('admin')")
@@ -39,6 +43,7 @@ public class UserController {
 	@PostMapping("/users")
 	@PreAuthorize("hasRole('admin')")
 	public ResponseEntity<User> saveUser(@RequestBody User user) {
+		user.setPassword(this.encoder.encode(user.getPassword()));
 		return ResponseEntity.ok(userServiceImpl.saveUser(user));
 	}
 
@@ -89,7 +94,7 @@ public class UserController {
 		user_selected.setDni(user.getDni());
 		user_selected.setEmail(user.getEmail());
 		user_selected.setName(user.getName());
-		user_selected.setPassword(user.getPassword());
+		//user_selected.setPassword(user.getPassword());
 		user_selected.setSurname(user.getSurname());
 		user_selected.setRole(user.getRole());
 		user_updated = userServiceImpl.updateUser(user_selected);
