@@ -51,6 +51,10 @@ public class Dish {
 
 	}
 
+	public Dish(int id) {
+		this.id = id;
+	}
+
 	public Dish(String name, String description, byte[] image, double price, Category category) {
 		this.name = name;
 		this.description = description;

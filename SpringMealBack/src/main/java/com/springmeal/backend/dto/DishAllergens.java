@@ -3,6 +3,8 @@
  */
 package com.springmeal.backend.dto;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.Entity;
 
 import jakarta.persistence.GeneratedValue;
@@ -49,8 +51,9 @@ public class DishAllergens {
 	public void setId(int id) {
 		this.id = id;
 	}
-
+	//@JsonIgnore
 	public Dish getDish() {
+		dish.setImage(null); // estalvia recursos
 		return dish;
 	}
 

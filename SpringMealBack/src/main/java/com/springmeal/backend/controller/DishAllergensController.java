@@ -3,6 +3,7 @@
  */
 package com.springmeal.backend.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -72,9 +73,15 @@ public class DishAllergensController {
 		
 	}
 
-	@GetMapping("/dishallergens/dish")
-	public List<DishAllergens> findByDish(@RequestBody Dish dish) {
-		return dishAllergensServiceImpl.findByDish(dish);
+	@GetMapping("/dishallergens/dish/{id}")
+	public List<DishAllergens> findByDish(@PathVariable(name = "id") int id_dish) {
+		List<DishAllergens> in = dishAllergensServiceImpl.findByDish(new Dish(id_dish));
+		List<DishAllergens> out = new ArrayList<DishAllergens>();
+		for (DishAllergens item : in) {
+			out.add(item);
+		}
+		return out;
+		
 	}
 
 }
